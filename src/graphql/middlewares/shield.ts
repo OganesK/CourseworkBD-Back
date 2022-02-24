@@ -1,4 +1,4 @@
-import { rule, shield as Shield } from 'graphql-shield';
+import { allow, rule, shield as Shield } from 'graphql-shield';
 
 import { Context } from '../context';
 
@@ -13,7 +13,7 @@ const permissions = {
     me: isAuthenticated,
   },
   Mutation: {
-    '*': isAuthenticated,
+    '*': allow,
   },
 };
 
