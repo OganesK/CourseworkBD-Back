@@ -14,8 +14,8 @@ const whitelist = [
   'http://localhost:5000',
   'http://localhost:4000',
   'http://localhost:3000',
-  'http://www.elithys.space/graphql',
-  'https://www.elithys.space/graphql',
+  'http://www.elithys.space',
+  'https://www.elithys.space',
   'otherWhiteListURLs',
 ];
 
