@@ -19,6 +19,11 @@ declare global {
 }
 
 export interface NexusGenInputs {
+  CreateShipmentArgs: { // input type
+    count: number; // Int!
+    productId: string; // String!
+    shopId: string; // String!
+  }
   CreateUserInput: { // input type
     email: string; // String!
     firstname: string; // String!
@@ -416,13 +421,6 @@ export interface NexusGenInputs {
   }
   ProductWhereUniqueInput: { // input type
     id?: string | null; // String
-  }
-  ShipmentCreateInput: { // input type
-    count: number; // Float!
-    createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
-    id?: string | null; // String
-    product: NexusGenInputs['ProductCreateNestedOneWithoutShipmentsInput']; // ProductCreateNestedOneWithoutShipmentsInput!
-    shop: NexusGenInputs['ShopCreateNestedOneWithoutShipmentsInput']; // ShopCreateNestedOneWithoutShipmentsInput!
   }
   ShipmentCreateManyProductInput: { // input type
     count: number; // Float!
@@ -915,7 +913,7 @@ export interface NexusGenFieldTypes {
   Mutation: { // field return type
     createOneManufacturer: NexusGenRootTypes['Manufacturer']; // Manufacturer!
     createOneProduct: NexusGenRootTypes['Product']; // Product!
-    createOneShipment: NexusGenRootTypes['Shipment']; // Shipment!
+    createOneShipment: NexusGenRootTypes['Shipment'] | null; // Shipment
     createOneShop: NexusGenRootTypes['Shop']; // Shop!
     signIn: NexusGenRootTypes['AuthPayload'] | null; // AuthPayload
     signUp: NexusGenRootTypes['AuthPayload'] | null; // AuthPayload
@@ -936,6 +934,7 @@ export interface NexusGenFieldTypes {
     unit: string; // String!
   }
   Query: { // field return type
+    getDailyReport: Array<NexusGenRootTypes['Shipment'] | null> | null; // [Shipment]
     manufacturer: NexusGenRootTypes['Manufacturer'] | null; // Manufacturer
     manufacturers: NexusGenRootTypes['Manufacturer'][]; // [Manufacturer!]!
     me: NexusGenRootTypes['User'] | null; // User
@@ -1008,6 +1007,7 @@ export interface NexusGenFieldTypeNames {
     unit: 'String'
   }
   Query: { // field return type name
+    getDailyReport: 'Shipment'
     manufacturer: 'Manufacturer'
     manufacturers: 'Manufacturer'
     me: 'User'
@@ -1062,7 +1062,7 @@ export interface NexusGenArgTypes {
       data: NexusGenInputs['ProductCreateInput']; // ProductCreateInput!
     }
     createOneShipment: { // args
-      data: NexusGenInputs['ShipmentCreateInput']; // ShipmentCreateInput!
+      data: NexusGenInputs['CreateShipmentArgs']; // CreateShipmentArgs!
     }
     createOneShop: { // args
       data: NexusGenInputs['ShopCreateInput']; // ShopCreateInput!

@@ -7,6 +7,12 @@ type AuthPayload {
   user: User
 }
 
+input CreateShipmentArgs {
+  count: Int!
+  productId: String!
+  shopId: String!
+}
+
 input CreateUserInput {
   email: String!
   firstname: String!
@@ -193,7 +199,7 @@ input ManufacturerWhereUniqueInput {
 type Mutation {
   createOneManufacturer(data: ManufacturerCreateInput!): Manufacturer!
   createOneProduct(data: ProductCreateInput!): Product!
-  createOneShipment(data: ShipmentCreateInput!): Shipment!
+  createOneShipment(data: CreateShipmentArgs!): Shipment
   createOneShop(data: ShopCreateInput!): Shop!
   signIn(data: SignInInput!): AuthPayload
   signUp(data: CreateUserInput!): AuthPayload
@@ -500,6 +506,7 @@ input ProductWhereUniqueInput {
 }
 
 type Query {
+  getDailyReport: [Shipment]
   manufacturer(where: ManufacturerWhereUniqueInput!): Manufacturer
   manufacturers(after: ManufacturerWhereUniqueInput, before: ManufacturerWhereUniqueInput, first: Int, last: Int): [Manufacturer!]!
   me: User
@@ -530,14 +537,6 @@ type Shipment {
   id: String!
   product: Product!
   shop: Shop!
-}
-
-input ShipmentCreateInput {
-  count: Float!
-  createdAt: DateTime
-  id: String
-  product: ProductCreateNestedOneWithoutShipmentsInput!
-  shop: ShopCreateNestedOneWithoutShipmentsInput!
 }
 
 input ShipmentCreateManyProductInput {
