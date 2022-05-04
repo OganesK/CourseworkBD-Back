@@ -8,8 +8,8 @@ export const Shop = objectType({
   definition (t) {
     t.model.id();
     t.model.name();
-    t.model.products();
-    t.model.shipments();
-    t.model.owner();
+    t.model.requests();
+    t.model.transactions();
+    t.model.shopOwner();
   }
 })

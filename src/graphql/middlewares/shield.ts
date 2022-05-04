@@ -10,7 +10,7 @@ const isAuthenticated = rule({ cache: 'contextual' })(
 
 const permissions = {
   Query: {
-    me: isAuthenticated,
+    me: allow,
   },
   Mutation: {
     '*': allow,

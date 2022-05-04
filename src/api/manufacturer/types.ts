@@ -8,7 +8,7 @@ export const Manufacturer = objectType({
   definition (t) {
     t.model.id();
     t.model.name();
-    t.model.products();
+    t.model.transactions();
     t.model.owner();
   }
 })

@@ -8,12 +8,13 @@ export const Product = objectType({
   definition (t) {
     t.model.id();
     t.model.name();
-    t.model.count();
+    t.model.amount();
     t.model.unit();
-    t.model.recieptDate();
-    t.model.manufacturer();
+    t.model.stockDate();
+    t.model.transactions();
     t.model.expirationDate();
-    t.model.shops();
-    t.model.shipments();
+    t.model.requests();
+    t.model.manufacturer();
+    t.model.manufacturerId()
   }
 })

@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
@@ -10,16 +7,71 @@ generator client {
   provider = "prisma-client-js"
 }
 
-enum Role {
-  SHOP_OWNER
-  FIRM_OWNER
-  ADMINISTRATOR
+model Product {
+  id          String        @id @default(uuid())
+  name        String
+  amount       Float
+  unit        String
+  stockDate   DateTime      @default(now())
+  expirationDate  DateTime
+  registered  Boolean
+
+  manufacturerId  String
+  manufacturer    Manufacturer  @relation(fields: [manufacturerId], references: [id])
+
+  transactions  Transaction[]
+  requests      Request[]
+}
+
+model Shop {
+  id          String        @id @default(uuid())
+  name        String
+
+  shopOwnerId String
+  shopOwner   User          @relation(fields: [shopOwnerId], references: [id])
+
+  transactions  Transaction[]
+  requests      Request[]
+}
+
+model Manufacturer {
+  id          String        @id @default(uuid())
+  name        String
+  products    Product[]
+
+  ownerId     String
+  owner       User          @relation(fields: [ownerId], references: [id])
+
+  transactions  Transaction[]
+}
+
+model Transaction {
+  id          String        @id @default(uuid())
+  productId   String
+  product     Product       @relation(fields: [productId], references: [id])
+  amount      Float
+  createdAt   DateTime      @default(now())
+  shopId      String?
+  shop        Shop?          @relation(fields: [shopId], references: [id])
+  manufacturerid  String?
+  manufacturer    Manufacturer?  @relation(fields: [manufacturerid], references: [id])
+}
+
+model Request {
+  id          String  @id @default(uuid())
+  productId   String
+  product     Product @relation(fields: [productId], references: [id])
+  amount      Float
+  approved    Boolean @default(false)
+
+  shopId      String
+  shop        Shop    @relation(fields: [shopId], references: [id])
 }
 
 model User {
-  id        String             @id @default(uuid())
+  id        String          @id @default(uuid())
   createdAt DateTime        @default(now())
-  role      Role?
+  role      USER_ROLE       @default(MANAGER)
   firstname String          @db.VarChar(64)
   lastname  String          @db.VarChar(64)
   email     String          @db.VarChar(64)   @unique
@@ -31,47 +83,54 @@ model User {
   tokenVersion            Int?
 }
 
-model Product {
-  id        String  @id @default(uuid())
-  name      String
-  count     Float
-  unit      String
-  recieptDate   DateTime  @default(now())
-  manufacturerId    String
-  manufacturer  Manufacturer @relation(fields: [manufacturerId], references: [id])
-  expirationDate  DateTime
-  shops           Shop[]
-
-  shipments       Shipment[]
+enum USER_ROLE {
+  SHOP_OWNER
+  FIRM_OWNER
+  ADMINISTRATOR
+  MANAGER
 }
 
-model Shop {
-  id    String  @id @default(uuid())
-  name  String  @unique
-  products  Product[]
+// model Product {
+//   id        String  @id @default(uuid())
+//   name      String
+//   count     Float
+//   unit      String
+//   recieptDate   DateTime  @default(now())
+//   manufacturerId    String
+//   manufacturer  Manufacturer @relation(fields: [manufacturerId], references: [id])
+//   expirationDate  DateTime
+//   shops           Shop[]
 
-  shipments    Shipment[]
+//   shipments       Shipment[]
+// }
 
-  ownerId String
-  owner   User    @relation(fields: [ownerId], references: [id])
-}
+// model Shop {
+//   id    String  @id @default(uuid())
+//   name  String  @unique
+//   products  Product[]
 
-model Manufacturer {
-  id      String  @id @default(uuid())
-  name    String
-  products  Product[]
+//   shipments    Shipment[]
 
-  ownerId   String
-  owner     User    @relation(fields: [ownerId], references: [id])
-}
+//   ownerId String
+//   owner   User    @relation(fields: [ownerId], references: [id])
+// }
 
-model Shipment {
-  id  String    @id @default(uuid())
-  productId String
-  product Product @relation(fields: [productId], references: [id])
-  createdAt   DateTime  @default(now())
-  count    Float
+// model Manufacturer {
+//   id      String  @id @default(uuid())
+//   name    String
+//   products  Product[]
 
-  shopId  String
-  shop    Shop    @relation(fields: [shopId], references: [id])
-}
+//   ownerId   String
+//   owner     User    @relation(fields: [ownerId], references: [id])
+// }
+
+// model Shipment {
+//   id  String    @id @default(uuid())
+//   productId String
+//   product Product @relation(fields: [productId], references: [id])
+//   createdAt   DateTime  @default(now())
+//   count    Float
+
+//   shopId  String
+//   shop    Shop    @relation(fields: [shopId], references: [id])
+// }

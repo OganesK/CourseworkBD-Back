@@ -2,15 +2,26 @@
 ### Do not make changes to this file directly
 
 
+input ApproveRequestArgs {
+  requestId: String!
+}
+
+input ApproveShipmentArgs {
+  productId: String!
+}
+
 type AuthPayload {
   token: String
   user: User
 }
 
-input CreateShipmentArgs {
-  count: Int!
-  productId: String!
-  shopId: String!
+input BoolFieldUpdateOperationsInput {
+  set: Boolean
+}
+
+input BoolFilter {
+  equals: Boolean
+  not: NestedBoolFilter
 }
 
 input CreateUserInput {
@@ -38,6 +49,10 @@ input DateTimeFilter {
   notIn: [DateTime!]
 }
 
+input EnumUSER_ROLEFieldUpdateOperationsInput {
+  set: USER_ROLE
+}
+
 input FloatFieldUpdateOperationsInput {
   decrement: Float
   divide: Float
@@ -61,7 +76,7 @@ type Manufacturer {
   id: String!
   name: String!
   owner: User!
-  products(after: ProductWhereUniqueInput, before: ProductWhereUniqueInput, first: Int, last: Int): [Product!]!
+  transactions(after: TransactionWhereUniqueInput, before: TransactionWhereUniqueInput, first: Int, last: Int): [Transaction!]!
 }
 
 input ManufacturerCreateInput {
@@ -69,6 +84,7 @@ input ManufacturerCreateInput {
   name: String!
   owner: UserCreateNestedOneWithoutManufacturesInput!
   products: ProductCreateNestedManyWithoutManufacturerInput
+  transactions: TransactionCreateNestedManyWithoutManufacturerInput
 }
 
 input ManufacturerCreateManyOwnerInput {
@@ -94,6 +110,12 @@ input ManufacturerCreateNestedOneWithoutProductsInput {
   create: ManufacturerCreateWithoutProductsInput
 }
 
+input ManufacturerCreateNestedOneWithoutTransactionsInput {
+  connect: ManufacturerWhereUniqueInput
+  connectOrCreate: ManufacturerCreateOrConnectWithoutTransactionsInput
+  create: ManufacturerCreateWithoutTransactionsInput
+}
+
 input ManufacturerCreateOrConnectWithoutOwnerInput {
   create: ManufacturerCreateWithoutOwnerInput!
   where: ManufacturerWhereUniqueInput!
@@ -104,16 +126,30 @@ input ManufacturerCreateOrConnectWithoutProductsInput {
   where: ManufacturerWhereUniqueInput!
 }
 
+input ManufacturerCreateOrConnectWithoutTransactionsInput {
+  create: ManufacturerCreateWithoutTransactionsInput!
+  where: ManufacturerWhereUniqueInput!
+}
+
 input ManufacturerCreateWithoutOwnerInput {
   id: String
   name: String!
   products: ProductCreateNestedManyWithoutManufacturerInput
+  transactions: TransactionCreateNestedManyWithoutManufacturerInput
 }
 
 input ManufacturerCreateWithoutProductsInput {
   id: String
   name: String!
   owner: UserCreateNestedOneWithoutManufacturesInput!
+  transactions: TransactionCreateNestedManyWithoutManufacturerInput
+}
+
+input ManufacturerCreateWithoutTransactionsInput {
+  id: String
+  name: String!
+  owner: UserCreateNestedOneWithoutManufacturesInput!
+  products: ProductCreateNestedManyWithoutManufacturerInput
 }
 
 input ManufacturerScalarWhereInput {
@@ -130,6 +166,7 @@ input ManufacturerUpdateInput {
   name: StringFieldUpdateOperationsInput
   owner: UserUpdateOneRequiredWithoutManufacturesInput
   products: ProductUpdateManyWithoutManufacturerInput
+  transactions: TransactionUpdateManyWithoutManufacturerInput
 }
 
 input ManufacturerUpdateManyMutationInput {
@@ -164,6 +201,16 @@ input ManufacturerUpdateOneRequiredWithoutProductsInput {
   upsert: ManufacturerUpsertWithoutProductsInput
 }
 
+input ManufacturerUpdateOneWithoutTransactionsInput {
+  connect: ManufacturerWhereUniqueInput
+  connectOrCreate: ManufacturerCreateOrConnectWithoutTransactionsInput
+  create: ManufacturerCreateWithoutTransactionsInput
+  delete: Boolean
+  disconnect: Boolean
+  update: ManufacturerUpdateWithoutTransactionsInput
+  upsert: ManufacturerUpsertWithoutTransactionsInput
+}
+
 input ManufacturerUpdateWithWhereUniqueWithoutOwnerInput {
   data: ManufacturerUpdateWithoutOwnerInput!
   where: ManufacturerWhereUniqueInput!
@@ -173,12 +220,21 @@ input ManufacturerUpdateWithoutOwnerInput {
   id: StringFieldUpdateOperationsInput
   name: StringFieldUpdateOperationsInput
   products: ProductUpdateManyWithoutManufacturerInput
+  transactions: TransactionUpdateManyWithoutManufacturerInput
 }
 
 input ManufacturerUpdateWithoutProductsInput {
   id: StringFieldUpdateOperationsInput
   name: StringFieldUpdateOperationsInput
   owner: UserUpdateOneRequiredWithoutManufacturesInput
+  transactions: TransactionUpdateManyWithoutManufacturerInput
+}
+
+input ManufacturerUpdateWithoutTransactionsInput {
+  id: StringFieldUpdateOperationsInput
+  name: StringFieldUpdateOperationsInput
+  owner: UserUpdateOneRequiredWithoutManufacturesInput
+  products: ProductUpdateManyWithoutManufacturerInput
 }
 
 input ManufacturerUpsertWithWhereUniqueWithoutOwnerInput {
@@ -192,21 +248,36 @@ input ManufacturerUpsertWithoutProductsInput {
   update: ManufacturerUpdateWithoutProductsInput!
 }
 
+input ManufacturerUpsertWithoutTransactionsInput {
+  create: ManufacturerCreateWithoutTransactionsInput!
+  update: ManufacturerUpdateWithoutTransactionsInput!
+}
+
 input ManufacturerWhereUniqueInput {
   id: String
 }
 
 type Mutation {
+  approveRequest(data: ApproveRequestArgs!): String
+  approveShipment(data: ApproveShipmentArgs!): String
   createOneManufacturer(data: ManufacturerCreateInput!): Manufacturer!
   createOneProduct(data: ProductCreateInput!): Product!
-  createOneShipment(data: CreateShipmentArgs!): Shipment
   createOneShop(data: ShopCreateInput!): Shop!
+  createOneTransaction(data: TransactionCreateInput!): Transaction!
+  requestProductFromStock(data: RequestProductArgs!): String
+  shipGoodsToStock(data: ShipGoodsToStockArgs!): String
   signIn(data: SignInInput!): AuthPayload
   signUp(data: CreateUserInput!): AuthPayload
   updateOneManufacturer(data: ManufacturerUpdateInput!, where: ManufacturerWhereUniqueInput!): Manufacturer
   updateOneProduct(data: ProductUpdateInput!, where: ProductWhereUniqueInput!): Product
-  updateOneShipment(data: ShipmentUpdateInput!, where: ShipmentWhereUniqueInput!): Shipment
+  updateOneRequest(data: RequestUpdateInput!, where: RequestWhereUniqueInput!): Request
   updateOneShop(data: ShopUpdateInput!, where: ShopWhereUniqueInput!): Shop
+  updateOneTransaction(data: TransactionUpdateInput!, where: TransactionWhereUniqueInput!): Transaction
+}
+
+input NestedBoolFilter {
+  equals: Boolean
+  not: NestedBoolFilter
 }
 
 input NestedDateTimeFilter {
@@ -245,8 +316,18 @@ input NestedStringFilter {
   startsWith: String
 }
 
-input NullableEnumRoleFieldUpdateOperationsInput {
-  set: Role
+input NestedStringNullableFilter {
+  contains: String
+  endsWith: String
+  equals: String
+  gt: String
+  gte: String
+  in: [String!]
+  lt: String
+  lte: String
+  not: NestedStringNullableFilter
+  notIn: [String!]
+  startsWith: String
 }
 
 input NullableIntFieldUpdateOperationsInput {
@@ -258,35 +339,38 @@ input NullableIntFieldUpdateOperationsInput {
 }
 
 type Product {
-  count: Float!
+  amount: Float!
   expirationDate: DateTime!
   id: String!
   manufacturer: Manufacturer!
+  manufacturerId: String!
   name: String!
-  recieptDate: DateTime!
-  shipments(after: ShipmentWhereUniqueInput, before: ShipmentWhereUniqueInput, first: Int, last: Int): [Shipment!]!
-  shops(after: ShopWhereUniqueInput, before: ShopWhereUniqueInput, first: Int, last: Int): [Shop!]!
+  requests(after: RequestWhereUniqueInput, before: RequestWhereUniqueInput, first: Int, last: Int): [Request!]!
+  stockDate: DateTime!
+  transactions(after: TransactionWhereUniqueInput, before: TransactionWhereUniqueInput, first: Int, last: Int): [Transaction!]!
   unit: String!
 }
 
 input ProductCreateInput {
-  count: Float!
+  amount: Float!
   expirationDate: DateTime!
   id: String
   manufacturer: ManufacturerCreateNestedOneWithoutProductsInput!
   name: String!
-  recieptDate: DateTime
-  shipments: ShipmentCreateNestedManyWithoutProductInput
-  shops: ShopCreateNestedManyWithoutProductsInput
+  registered: Boolean!
+  requests: RequestCreateNestedManyWithoutProductInput
+  stockDate: DateTime
+  transactions: TransactionCreateNestedManyWithoutProductInput
   unit: String!
 }
 
 input ProductCreateManyManufacturerInput {
-  count: Float!
+  amount: Float!
   expirationDate: DateTime!
   id: String
   name: String!
-  recieptDate: DateTime
+  registered: Boolean!
+  stockDate: DateTime
   unit: String!
 }
 
@@ -302,16 +386,16 @@ input ProductCreateNestedManyWithoutManufacturerInput {
   createMany: ProductCreateManyManufacturerInputEnvelope
 }
 
-input ProductCreateNestedManyWithoutShopsInput {
-  connect: [ProductWhereUniqueInput!]
-  connectOrCreate: [ProductCreateOrConnectWithoutShopsInput!]
-  create: [ProductCreateWithoutShopsInput!]
+input ProductCreateNestedOneWithoutRequestsInput {
+  connect: ProductWhereUniqueInput
+  connectOrCreate: ProductCreateOrConnectWithoutRequestsInput
+  create: ProductCreateWithoutRequestsInput
 }
 
-input ProductCreateNestedOneWithoutShipmentsInput {
+input ProductCreateNestedOneWithoutTransactionsInput {
   connect: ProductWhereUniqueInput
-  connectOrCreate: ProductCreateOrConnectWithoutShipmentsInput
-  create: ProductCreateWithoutShipmentsInput
+  connectOrCreate: ProductCreateOrConnectWithoutTransactionsInput
+  create: ProductCreateWithoutTransactionsInput
 }
 
 input ProductCreateOrConnectWithoutManufacturerInput {
@@ -319,46 +403,49 @@ input ProductCreateOrConnectWithoutManufacturerInput {
   where: ProductWhereUniqueInput!
 }
 
-input ProductCreateOrConnectWithoutShipmentsInput {
-  create: ProductCreateWithoutShipmentsInput!
+input ProductCreateOrConnectWithoutRequestsInput {
+  create: ProductCreateWithoutRequestsInput!
   where: ProductWhereUniqueInput!
 }
 
-input ProductCreateOrConnectWithoutShopsInput {
-  create: ProductCreateWithoutShopsInput!
+input ProductCreateOrConnectWithoutTransactionsInput {
+  create: ProductCreateWithoutTransactionsInput!
   where: ProductWhereUniqueInput!
 }
 
 input ProductCreateWithoutManufacturerInput {
-  count: Float!
+  amount: Float!
   expirationDate: DateTime!
   id: String
   name: String!
-  recieptDate: DateTime
-  shipments: ShipmentCreateNestedManyWithoutProductInput
-  shops: ShopCreateNestedManyWithoutProductsInput
+  registered: Boolean!
+  requests: RequestCreateNestedManyWithoutProductInput
+  stockDate: DateTime
+  transactions: TransactionCreateNestedManyWithoutProductInput
   unit: String!
 }
 
-input ProductCreateWithoutShipmentsInput {
-  count: Float!
+input ProductCreateWithoutRequestsInput {
+  amount: Float!
   expirationDate: DateTime!
   id: String
   manufacturer: ManufacturerCreateNestedOneWithoutProductsInput!
   name: String!
-  recieptDate: DateTime
-  shops: ShopCreateNestedManyWithoutProductsInput
+  registered: Boolean!
+  stockDate: DateTime
+  transactions: TransactionCreateNestedManyWithoutProductInput
   unit: String!
 }
 
-input ProductCreateWithoutShopsInput {
-  count: Float!
+input ProductCreateWithoutTransactionsInput {
+  amount: Float!
   expirationDate: DateTime!
   id: String
   manufacturer: ManufacturerCreateNestedOneWithoutProductsInput!
   name: String!
-  recieptDate: DateTime
-  shipments: ShipmentCreateNestedManyWithoutProductInput
+  registered: Boolean!
+  requests: RequestCreateNestedManyWithoutProductInput
+  stockDate: DateTime
   unit: String!
 }
 
@@ -366,42 +453,40 @@ input ProductScalarWhereInput {
   AND: [ProductScalarWhereInput!]
   NOT: [ProductScalarWhereInput!]
   OR: [ProductScalarWhereInput!]
-  count: FloatFilter
+  amount: FloatFilter
   expirationDate: DateTimeFilter
   id: StringFilter
   manufacturerId: StringFilter
   name: StringFilter
-  recieptDate: DateTimeFilter
+  registered: BoolFilter
+  stockDate: DateTimeFilter
   unit: StringFilter
 }
 
 input ProductUpdateInput {
-  count: FloatFieldUpdateOperationsInput
+  amount: FloatFieldUpdateOperationsInput
   expirationDate: DateTimeFieldUpdateOperationsInput
   id: StringFieldUpdateOperationsInput
   manufacturer: ManufacturerUpdateOneRequiredWithoutProductsInput
   name: StringFieldUpdateOperationsInput
-  recieptDate: DateTimeFieldUpdateOperationsInput
-  shipments: ShipmentUpdateManyWithoutProductInput
-  shops: ShopUpdateManyWithoutProductsInput
+  registered: BoolFieldUpdateOperationsInput
+  requests: RequestUpdateManyWithoutProductInput
+  stockDate: DateTimeFieldUpdateOperationsInput
+  transactions: TransactionUpdateManyWithoutProductInput
   unit: StringFieldUpdateOperationsInput
 }
 
 input ProductUpdateManyMutationInput {
-  count: FloatFieldUpdateOperationsInput
+  amount: FloatFieldUpdateOperationsInput
   expirationDate: DateTimeFieldUpdateOperationsInput
   id: StringFieldUpdateOperationsInput
   name: StringFieldUpdateOperationsInput
-  recieptDate: DateTimeFieldUpdateOperationsInput
+  registered: BoolFieldUpdateOperationsInput
+  stockDate: DateTimeFieldUpdateOperationsInput
   unit: StringFieldUpdateOperationsInput
 }
 
 input ProductUpdateManyWithWhereWithoutManufacturerInput {
-  data: ProductUpdateManyMutationInput!
-  where: ProductScalarWhereInput!
-}
-
-input ProductUpdateManyWithWhereWithoutShopsInput {
   data: ProductUpdateManyMutationInput!
   where: ProductScalarWhereInput!
 }
@@ -420,25 +505,20 @@ input ProductUpdateManyWithoutManufacturerInput {
   upsert: [ProductUpsertWithWhereUniqueWithoutManufacturerInput!]
 }
 
-input ProductUpdateManyWithoutShopsInput {
-  connect: [ProductWhereUniqueInput!]
-  connectOrCreate: [ProductCreateOrConnectWithoutShopsInput!]
-  create: [ProductCreateWithoutShopsInput!]
-  delete: [ProductWhereUniqueInput!]
-  deleteMany: [ProductScalarWhereInput!]
-  disconnect: [ProductWhereUniqueInput!]
-  set: [ProductWhereUniqueInput!]
-  update: [ProductUpdateWithWhereUniqueWithoutShopsInput!]
-  updateMany: [ProductUpdateManyWithWhereWithoutShopsInput!]
-  upsert: [ProductUpsertWithWhereUniqueWithoutShopsInput!]
+input ProductUpdateOneRequiredWithoutRequestsInput {
+  connect: ProductWhereUniqueInput
+  connectOrCreate: ProductCreateOrConnectWithoutRequestsInput
+  create: ProductCreateWithoutRequestsInput
+  update: ProductUpdateWithoutRequestsInput
+  upsert: ProductUpsertWithoutRequestsInput
 }
 
-input ProductUpdateOneRequiredWithoutShipmentsInput {
+input ProductUpdateOneRequiredWithoutTransactionsInput {
   connect: ProductWhereUniqueInput
-  connectOrCreate: ProductCreateOrConnectWithoutShipmentsInput
-  create: ProductCreateWithoutShipmentsInput
-  update: ProductUpdateWithoutShipmentsInput
-  upsert: ProductUpsertWithoutShipmentsInput
+  connectOrCreate: ProductCreateOrConnectWithoutTransactionsInput
+  create: ProductCreateWithoutTransactionsInput
+  update: ProductUpdateWithoutTransactionsInput
+  upsert: ProductUpsertWithoutTransactionsInput
 }
 
 input ProductUpdateWithWhereUniqueWithoutManufacturerInput {
@@ -446,41 +526,39 @@ input ProductUpdateWithWhereUniqueWithoutManufacturerInput {
   where: ProductWhereUniqueInput!
 }
 
-input ProductUpdateWithWhereUniqueWithoutShopsInput {
-  data: ProductUpdateWithoutShopsInput!
-  where: ProductWhereUniqueInput!
-}
-
 input ProductUpdateWithoutManufacturerInput {
-  count: FloatFieldUpdateOperationsInput
+  amount: FloatFieldUpdateOperationsInput
   expirationDate: DateTimeFieldUpdateOperationsInput
   id: StringFieldUpdateOperationsInput
   name: StringFieldUpdateOperationsInput
-  recieptDate: DateTimeFieldUpdateOperationsInput
-  shipments: ShipmentUpdateManyWithoutProductInput
-  shops: ShopUpdateManyWithoutProductsInput
+  registered: BoolFieldUpdateOperationsInput
+  requests: RequestUpdateManyWithoutProductInput
+  stockDate: DateTimeFieldUpdateOperationsInput
+  transactions: TransactionUpdateManyWithoutProductInput
   unit: StringFieldUpdateOperationsInput
 }
 
-input ProductUpdateWithoutShipmentsInput {
-  count: FloatFieldUpdateOperationsInput
+input ProductUpdateWithoutRequestsInput {
+  amount: FloatFieldUpdateOperationsInput
   expirationDate: DateTimeFieldUpdateOperationsInput
   id: StringFieldUpdateOperationsInput
   manufacturer: ManufacturerUpdateOneRequiredWithoutProductsInput
   name: StringFieldUpdateOperationsInput
-  recieptDate: DateTimeFieldUpdateOperationsInput
-  shops: ShopUpdateManyWithoutProductsInput
+  registered: BoolFieldUpdateOperationsInput
+  stockDate: DateTimeFieldUpdateOperationsInput
+  transactions: TransactionUpdateManyWithoutProductInput
   unit: StringFieldUpdateOperationsInput
 }
 
-input ProductUpdateWithoutShopsInput {
-  count: FloatFieldUpdateOperationsInput
+input ProductUpdateWithoutTransactionsInput {
+  amount: FloatFieldUpdateOperationsInput
   expirationDate: DateTimeFieldUpdateOperationsInput
   id: StringFieldUpdateOperationsInput
   manufacturer: ManufacturerUpdateOneRequiredWithoutProductsInput
   name: StringFieldUpdateOperationsInput
-  recieptDate: DateTimeFieldUpdateOperationsInput
-  shipments: ShipmentUpdateManyWithoutProductInput
+  registered: BoolFieldUpdateOperationsInput
+  requests: RequestUpdateManyWithoutProductInput
+  stockDate: DateTimeFieldUpdateOperationsInput
   unit: StringFieldUpdateOperationsInput
 }
 
@@ -490,15 +568,14 @@ input ProductUpsertWithWhereUniqueWithoutManufacturerInput {
   where: ProductWhereUniqueInput!
 }
 
-input ProductUpsertWithWhereUniqueWithoutShopsInput {
-  create: ProductCreateWithoutShopsInput!
-  update: ProductUpdateWithoutShopsInput!
-  where: ProductWhereUniqueInput!
+input ProductUpsertWithoutRequestsInput {
+  create: ProductCreateWithoutRequestsInput!
+  update: ProductUpdateWithoutRequestsInput!
 }
 
-input ProductUpsertWithoutShipmentsInput {
-  create: ProductCreateWithoutShipmentsInput!
-  update: ProductUpdateWithoutShipmentsInput!
+input ProductUpsertWithoutTransactionsInput {
+  create: ProductCreateWithoutTransactionsInput!
+  update: ProductUpdateWithoutTransactionsInput!
 }
 
 input ProductWhereUniqueInput {
@@ -506,16 +583,19 @@ input ProductWhereUniqueInput {
 }
 
 type Query {
-  getDailyReport: [Shipment]
+  getApprovedProduct: [Product]
+  getNotApprovedProduct: [Product]
   manufacturer(where: ManufacturerWhereUniqueInput!): Manufacturer
   manufacturers(after: ManufacturerWhereUniqueInput, before: ManufacturerWhereUniqueInput, first: Int, last: Int): [Manufacturer!]!
   me: User
   product(where: ProductWhereUniqueInput!): Product
   products(after: ProductWhereUniqueInput, before: ProductWhereUniqueInput, first: Int, last: Int): [Product!]!
-  shipment(where: ShipmentWhereUniqueInput!): Shipment
-  shipments(after: ShipmentWhereUniqueInput, before: ShipmentWhereUniqueInput, first: Int, last: Int): [Shipment!]!
+  request(where: RequestWhereUniqueInput!): Request
+  requests(after: RequestWhereUniqueInput, before: RequestWhereUniqueInput, first: Int, last: Int): [Request!]!
   shop(where: ShopWhereUniqueInput!): Shop
   shops(after: ShopWhereUniqueInput, before: ShopWhereUniqueInput, first: Int, last: Int): [Shop!]!
+  transaction(where: TransactionWhereUniqueInput!): Transaction
+  transactions(after: TransactionWhereUniqueInput, before: TransactionWhereUniqueInput, first: Int, last: Int): [Transaction!]!
   user(where: UserWhereUniqueInput!): User
   users(after: UserWhereUniqueInput, before: UserWhereUniqueInput, first: Int, last: Int): [User!]!
 }
@@ -525,264 +605,271 @@ enum QueryMode {
   insensitive
 }
 
-enum Role {
-  ADMINISTRATOR
-  FIRM_OWNER
-  SHOP_OWNER
-}
-
-type Shipment {
-  count: Float!
-  createdAt: DateTime!
+type Request {
+  amount: Float!
   id: String!
   product: Product!
   shop: Shop!
 }
 
-input ShipmentCreateManyProductInput {
-  count: Float!
-  createdAt: DateTime
+input RequestCreateManyProductInput {
+  amount: Float!
+  approved: Boolean
   id: String
   shopId: String!
 }
 
-input ShipmentCreateManyProductInputEnvelope {
-  data: [ShipmentCreateManyProductInput!]
+input RequestCreateManyProductInputEnvelope {
+  data: [RequestCreateManyProductInput!]
   skipDuplicates: Boolean
 }
 
-input ShipmentCreateManyShopInput {
-  count: Float!
-  createdAt: DateTime
+input RequestCreateManyShopInput {
+  amount: Float!
+  approved: Boolean
   id: String
   productId: String!
 }
 
-input ShipmentCreateManyShopInputEnvelope {
-  data: [ShipmentCreateManyShopInput!]
+input RequestCreateManyShopInputEnvelope {
+  data: [RequestCreateManyShopInput!]
   skipDuplicates: Boolean
 }
 
-input ShipmentCreateNestedManyWithoutProductInput {
-  connect: [ShipmentWhereUniqueInput!]
-  connectOrCreate: [ShipmentCreateOrConnectWithoutProductInput!]
-  create: [ShipmentCreateWithoutProductInput!]
-  createMany: ShipmentCreateManyProductInputEnvelope
+input RequestCreateNestedManyWithoutProductInput {
+  connect: [RequestWhereUniqueInput!]
+  connectOrCreate: [RequestCreateOrConnectWithoutProductInput!]
+  create: [RequestCreateWithoutProductInput!]
+  createMany: RequestCreateManyProductInputEnvelope
 }
 
-input ShipmentCreateNestedManyWithoutShopInput {
-  connect: [ShipmentWhereUniqueInput!]
-  connectOrCreate: [ShipmentCreateOrConnectWithoutShopInput!]
-  create: [ShipmentCreateWithoutShopInput!]
-  createMany: ShipmentCreateManyShopInputEnvelope
+input RequestCreateNestedManyWithoutShopInput {
+  connect: [RequestWhereUniqueInput!]
+  connectOrCreate: [RequestCreateOrConnectWithoutShopInput!]
+  create: [RequestCreateWithoutShopInput!]
+  createMany: RequestCreateManyShopInputEnvelope
 }
 
-input ShipmentCreateOrConnectWithoutProductInput {
-  create: ShipmentCreateWithoutProductInput!
-  where: ShipmentWhereUniqueInput!
+input RequestCreateOrConnectWithoutProductInput {
+  create: RequestCreateWithoutProductInput!
+  where: RequestWhereUniqueInput!
 }
 
-input ShipmentCreateOrConnectWithoutShopInput {
-  create: ShipmentCreateWithoutShopInput!
-  where: ShipmentWhereUniqueInput!
+input RequestCreateOrConnectWithoutShopInput {
+  create: RequestCreateWithoutShopInput!
+  where: RequestWhereUniqueInput!
 }
 
-input ShipmentCreateWithoutProductInput {
-  count: Float!
-  createdAt: DateTime
+input RequestCreateWithoutProductInput {
+  amount: Float!
+  approved: Boolean
   id: String
-  shop: ShopCreateNestedOneWithoutShipmentsInput!
+  shop: ShopCreateNestedOneWithoutRequestsInput!
 }
 
-input ShipmentCreateWithoutShopInput {
-  count: Float!
-  createdAt: DateTime
+input RequestCreateWithoutShopInput {
+  amount: Float!
+  approved: Boolean
   id: String
-  product: ProductCreateNestedOneWithoutShipmentsInput!
+  product: ProductCreateNestedOneWithoutRequestsInput!
 }
 
-input ShipmentScalarWhereInput {
-  AND: [ShipmentScalarWhereInput!]
-  NOT: [ShipmentScalarWhereInput!]
-  OR: [ShipmentScalarWhereInput!]
-  count: FloatFilter
-  createdAt: DateTimeFilter
+input RequestProductArgs {
+  amount: Float!
+  productId: String!
+  shopId: String!
+}
+
+input RequestScalarWhereInput {
+  AND: [RequestScalarWhereInput!]
+  NOT: [RequestScalarWhereInput!]
+  OR: [RequestScalarWhereInput!]
+  amount: FloatFilter
+  approved: BoolFilter
   id: StringFilter
   productId: StringFilter
   shopId: StringFilter
 }
 
-input ShipmentUpdateInput {
-  count: FloatFieldUpdateOperationsInput
-  createdAt: DateTimeFieldUpdateOperationsInput
+input RequestUpdateInput {
+  amount: FloatFieldUpdateOperationsInput
+  approved: BoolFieldUpdateOperationsInput
   id: StringFieldUpdateOperationsInput
-  product: ProductUpdateOneRequiredWithoutShipmentsInput
-  shop: ShopUpdateOneRequiredWithoutShipmentsInput
+  product: ProductUpdateOneRequiredWithoutRequestsInput
+  shop: ShopUpdateOneRequiredWithoutRequestsInput
 }
 
-input ShipmentUpdateManyMutationInput {
-  count: FloatFieldUpdateOperationsInput
-  createdAt: DateTimeFieldUpdateOperationsInput
+input RequestUpdateManyMutationInput {
+  amount: FloatFieldUpdateOperationsInput
+  approved: BoolFieldUpdateOperationsInput
   id: StringFieldUpdateOperationsInput
 }
 
-input ShipmentUpdateManyWithWhereWithoutProductInput {
-  data: ShipmentUpdateManyMutationInput!
-  where: ShipmentScalarWhereInput!
+input RequestUpdateManyWithWhereWithoutProductInput {
+  data: RequestUpdateManyMutationInput!
+  where: RequestScalarWhereInput!
 }
 
-input ShipmentUpdateManyWithWhereWithoutShopInput {
-  data: ShipmentUpdateManyMutationInput!
-  where: ShipmentScalarWhereInput!
+input RequestUpdateManyWithWhereWithoutShopInput {
+  data: RequestUpdateManyMutationInput!
+  where: RequestScalarWhereInput!
 }
 
-input ShipmentUpdateManyWithoutProductInput {
-  connect: [ShipmentWhereUniqueInput!]
-  connectOrCreate: [ShipmentCreateOrConnectWithoutProductInput!]
-  create: [ShipmentCreateWithoutProductInput!]
-  createMany: ShipmentCreateManyProductInputEnvelope
-  delete: [ShipmentWhereUniqueInput!]
-  deleteMany: [ShipmentScalarWhereInput!]
-  disconnect: [ShipmentWhereUniqueInput!]
-  set: [ShipmentWhereUniqueInput!]
-  update: [ShipmentUpdateWithWhereUniqueWithoutProductInput!]
-  updateMany: [ShipmentUpdateManyWithWhereWithoutProductInput!]
-  upsert: [ShipmentUpsertWithWhereUniqueWithoutProductInput!]
+input RequestUpdateManyWithoutProductInput {
+  connect: [RequestWhereUniqueInput!]
+  connectOrCreate: [RequestCreateOrConnectWithoutProductInput!]
+  create: [RequestCreateWithoutProductInput!]
+  createMany: RequestCreateManyProductInputEnvelope
+  delete: [RequestWhereUniqueInput!]
+  deleteMany: [RequestScalarWhereInput!]
+  disconnect: [RequestWhereUniqueInput!]
+  set: [RequestWhereUniqueInput!]
+  update: [RequestUpdateWithWhereUniqueWithoutProductInput!]
+  updateMany: [RequestUpdateManyWithWhereWithoutProductInput!]
+  upsert: [RequestUpsertWithWhereUniqueWithoutProductInput!]
 }
 
-input ShipmentUpdateManyWithoutShopInput {
-  connect: [ShipmentWhereUniqueInput!]
-  connectOrCreate: [ShipmentCreateOrConnectWithoutShopInput!]
-  create: [ShipmentCreateWithoutShopInput!]
-  createMany: ShipmentCreateManyShopInputEnvelope
-  delete: [ShipmentWhereUniqueInput!]
-  deleteMany: [ShipmentScalarWhereInput!]
-  disconnect: [ShipmentWhereUniqueInput!]
-  set: [ShipmentWhereUniqueInput!]
-  update: [ShipmentUpdateWithWhereUniqueWithoutShopInput!]
-  updateMany: [ShipmentUpdateManyWithWhereWithoutShopInput!]
-  upsert: [ShipmentUpsertWithWhereUniqueWithoutShopInput!]
+input RequestUpdateManyWithoutShopInput {
+  connect: [RequestWhereUniqueInput!]
+  connectOrCreate: [RequestCreateOrConnectWithoutShopInput!]
+  create: [RequestCreateWithoutShopInput!]
+  createMany: RequestCreateManyShopInputEnvelope
+  delete: [RequestWhereUniqueInput!]
+  deleteMany: [RequestScalarWhereInput!]
+  disconnect: [RequestWhereUniqueInput!]
+  set: [RequestWhereUniqueInput!]
+  update: [RequestUpdateWithWhereUniqueWithoutShopInput!]
+  updateMany: [RequestUpdateManyWithWhereWithoutShopInput!]
+  upsert: [RequestUpsertWithWhereUniqueWithoutShopInput!]
 }
 
-input ShipmentUpdateWithWhereUniqueWithoutProductInput {
-  data: ShipmentUpdateWithoutProductInput!
-  where: ShipmentWhereUniqueInput!
+input RequestUpdateWithWhereUniqueWithoutProductInput {
+  data: RequestUpdateWithoutProductInput!
+  where: RequestWhereUniqueInput!
 }
 
-input ShipmentUpdateWithWhereUniqueWithoutShopInput {
-  data: ShipmentUpdateWithoutShopInput!
-  where: ShipmentWhereUniqueInput!
+input RequestUpdateWithWhereUniqueWithoutShopInput {
+  data: RequestUpdateWithoutShopInput!
+  where: RequestWhereUniqueInput!
 }
 
-input ShipmentUpdateWithoutProductInput {
-  count: FloatFieldUpdateOperationsInput
-  createdAt: DateTimeFieldUpdateOperationsInput
+input RequestUpdateWithoutProductInput {
+  amount: FloatFieldUpdateOperationsInput
+  approved: BoolFieldUpdateOperationsInput
   id: StringFieldUpdateOperationsInput
-  shop: ShopUpdateOneRequiredWithoutShipmentsInput
+  shop: ShopUpdateOneRequiredWithoutRequestsInput
 }
 
-input ShipmentUpdateWithoutShopInput {
-  count: FloatFieldUpdateOperationsInput
-  createdAt: DateTimeFieldUpdateOperationsInput
+input RequestUpdateWithoutShopInput {
+  amount: FloatFieldUpdateOperationsInput
+  approved: BoolFieldUpdateOperationsInput
   id: StringFieldUpdateOperationsInput
-  product: ProductUpdateOneRequiredWithoutShipmentsInput
+  product: ProductUpdateOneRequiredWithoutRequestsInput
 }
 
-input ShipmentUpsertWithWhereUniqueWithoutProductInput {
-  create: ShipmentCreateWithoutProductInput!
-  update: ShipmentUpdateWithoutProductInput!
-  where: ShipmentWhereUniqueInput!
+input RequestUpsertWithWhereUniqueWithoutProductInput {
+  create: RequestCreateWithoutProductInput!
+  update: RequestUpdateWithoutProductInput!
+  where: RequestWhereUniqueInput!
 }
 
-input ShipmentUpsertWithWhereUniqueWithoutShopInput {
-  create: ShipmentCreateWithoutShopInput!
-  update: ShipmentUpdateWithoutShopInput!
-  where: ShipmentWhereUniqueInput!
+input RequestUpsertWithWhereUniqueWithoutShopInput {
+  create: RequestCreateWithoutShopInput!
+  update: RequestUpdateWithoutShopInput!
+  where: RequestWhereUniqueInput!
 }
 
-input ShipmentWhereUniqueInput {
+input RequestWhereUniqueInput {
   id: String
+}
+
+input ShipGoodsToStockArgs {
+  expirationDate: String!
+  manufacturerId: String!
+  productAmount: Float!
+  productName: String!
+  productUnit: String!
 }
 
 type Shop {
   id: String!
   name: String!
-  owner: User!
-  products(after: ProductWhereUniqueInput, before: ProductWhereUniqueInput, first: Int, last: Int): [Product!]!
-  shipments(after: ShipmentWhereUniqueInput, before: ShipmentWhereUniqueInput, first: Int, last: Int): [Shipment!]!
+  requests(after: RequestWhereUniqueInput, before: RequestWhereUniqueInput, first: Int, last: Int): [Request!]!
+  shopOwner: User!
+  transactions(after: TransactionWhereUniqueInput, before: TransactionWhereUniqueInput, first: Int, last: Int): [Transaction!]!
 }
 
 input ShopCreateInput {
   id: String
   name: String!
-  owner: UserCreateNestedOneWithoutShopsInput!
-  products: ProductCreateNestedManyWithoutShopsInput
-  shipments: ShipmentCreateNestedManyWithoutShopInput
+  requests: RequestCreateNestedManyWithoutShopInput
+  shopOwner: UserCreateNestedOneWithoutShopsInput!
+  transactions: TransactionCreateNestedManyWithoutShopInput
 }
 
-input ShopCreateManyOwnerInput {
+input ShopCreateManyShopOwnerInput {
   id: String
   name: String!
 }
 
-input ShopCreateManyOwnerInputEnvelope {
-  data: [ShopCreateManyOwnerInput!]
+input ShopCreateManyShopOwnerInputEnvelope {
+  data: [ShopCreateManyShopOwnerInput!]
   skipDuplicates: Boolean
 }
 
-input ShopCreateNestedManyWithoutOwnerInput {
+input ShopCreateNestedManyWithoutShopOwnerInput {
   connect: [ShopWhereUniqueInput!]
-  connectOrCreate: [ShopCreateOrConnectWithoutOwnerInput!]
-  create: [ShopCreateWithoutOwnerInput!]
-  createMany: ShopCreateManyOwnerInputEnvelope
+  connectOrCreate: [ShopCreateOrConnectWithoutShopOwnerInput!]
+  create: [ShopCreateWithoutShopOwnerInput!]
+  createMany: ShopCreateManyShopOwnerInputEnvelope
 }
 
-input ShopCreateNestedManyWithoutProductsInput {
-  connect: [ShopWhereUniqueInput!]
-  connectOrCreate: [ShopCreateOrConnectWithoutProductsInput!]
-  create: [ShopCreateWithoutProductsInput!]
-}
-
-input ShopCreateNestedOneWithoutShipmentsInput {
+input ShopCreateNestedOneWithoutRequestsInput {
   connect: ShopWhereUniqueInput
-  connectOrCreate: ShopCreateOrConnectWithoutShipmentsInput
-  create: ShopCreateWithoutShipmentsInput
+  connectOrCreate: ShopCreateOrConnectWithoutRequestsInput
+  create: ShopCreateWithoutRequestsInput
 }
 
-input ShopCreateOrConnectWithoutOwnerInput {
-  create: ShopCreateWithoutOwnerInput!
+input ShopCreateNestedOneWithoutTransactionsInput {
+  connect: ShopWhereUniqueInput
+  connectOrCreate: ShopCreateOrConnectWithoutTransactionsInput
+  create: ShopCreateWithoutTransactionsInput
+}
+
+input ShopCreateOrConnectWithoutRequestsInput {
+  create: ShopCreateWithoutRequestsInput!
   where: ShopWhereUniqueInput!
 }
 
-input ShopCreateOrConnectWithoutProductsInput {
-  create: ShopCreateWithoutProductsInput!
+input ShopCreateOrConnectWithoutShopOwnerInput {
+  create: ShopCreateWithoutShopOwnerInput!
   where: ShopWhereUniqueInput!
 }
 
-input ShopCreateOrConnectWithoutShipmentsInput {
-  create: ShopCreateWithoutShipmentsInput!
+input ShopCreateOrConnectWithoutTransactionsInput {
+  create: ShopCreateWithoutTransactionsInput!
   where: ShopWhereUniqueInput!
 }
 
-input ShopCreateWithoutOwnerInput {
+input ShopCreateWithoutRequestsInput {
   id: String
   name: String!
-  products: ProductCreateNestedManyWithoutShopsInput
-  shipments: ShipmentCreateNestedManyWithoutShopInput
+  shopOwner: UserCreateNestedOneWithoutShopsInput!
+  transactions: TransactionCreateNestedManyWithoutShopInput
 }
 
-input ShopCreateWithoutProductsInput {
+input ShopCreateWithoutShopOwnerInput {
   id: String
   name: String!
-  owner: UserCreateNestedOneWithoutShopsInput!
-  shipments: ShipmentCreateNestedManyWithoutShopInput
+  requests: RequestCreateNestedManyWithoutShopInput
+  transactions: TransactionCreateNestedManyWithoutShopInput
 }
 
-input ShopCreateWithoutShipmentsInput {
+input ShopCreateWithoutTransactionsInput {
   id: String
   name: String!
-  owner: UserCreateNestedOneWithoutShopsInput!
-  products: ProductCreateNestedManyWithoutShopsInput
+  requests: RequestCreateNestedManyWithoutShopInput
+  shopOwner: UserCreateNestedOneWithoutShopsInput!
 }
 
 input ShopScalarWhereInput {
@@ -791,15 +878,15 @@ input ShopScalarWhereInput {
   OR: [ShopScalarWhereInput!]
   id: StringFilter
   name: StringFilter
-  ownerId: StringFilter
+  shopOwnerId: StringFilter
 }
 
 input ShopUpdateInput {
   id: StringFieldUpdateOperationsInput
   name: StringFieldUpdateOperationsInput
-  owner: UserUpdateOneRequiredWithoutShopsInput
-  products: ProductUpdateManyWithoutShopsInput
-  shipments: ShipmentUpdateManyWithoutShopInput
+  requests: RequestUpdateManyWithoutShopInput
+  shopOwner: UserUpdateOneRequiredWithoutShopsInput
+  transactions: TransactionUpdateManyWithoutShopInput
 }
 
 input ShopUpdateManyMutationInput {
@@ -807,102 +894,87 @@ input ShopUpdateManyMutationInput {
   name: StringFieldUpdateOperationsInput
 }
 
-input ShopUpdateManyWithWhereWithoutOwnerInput {
+input ShopUpdateManyWithWhereWithoutShopOwnerInput {
   data: ShopUpdateManyMutationInput!
   where: ShopScalarWhereInput!
 }
 
-input ShopUpdateManyWithWhereWithoutProductsInput {
-  data: ShopUpdateManyMutationInput!
-  where: ShopScalarWhereInput!
-}
-
-input ShopUpdateManyWithoutOwnerInput {
+input ShopUpdateManyWithoutShopOwnerInput {
   connect: [ShopWhereUniqueInput!]
-  connectOrCreate: [ShopCreateOrConnectWithoutOwnerInput!]
-  create: [ShopCreateWithoutOwnerInput!]
-  createMany: ShopCreateManyOwnerInputEnvelope
+  connectOrCreate: [ShopCreateOrConnectWithoutShopOwnerInput!]
+  create: [ShopCreateWithoutShopOwnerInput!]
+  createMany: ShopCreateManyShopOwnerInputEnvelope
   delete: [ShopWhereUniqueInput!]
   deleteMany: [ShopScalarWhereInput!]
   disconnect: [ShopWhereUniqueInput!]
   set: [ShopWhereUniqueInput!]
-  update: [ShopUpdateWithWhereUniqueWithoutOwnerInput!]
-  updateMany: [ShopUpdateManyWithWhereWithoutOwnerInput!]
-  upsert: [ShopUpsertWithWhereUniqueWithoutOwnerInput!]
+  update: [ShopUpdateWithWhereUniqueWithoutShopOwnerInput!]
+  updateMany: [ShopUpdateManyWithWhereWithoutShopOwnerInput!]
+  upsert: [ShopUpsertWithWhereUniqueWithoutShopOwnerInput!]
 }
 
-input ShopUpdateManyWithoutProductsInput {
-  connect: [ShopWhereUniqueInput!]
-  connectOrCreate: [ShopCreateOrConnectWithoutProductsInput!]
-  create: [ShopCreateWithoutProductsInput!]
-  delete: [ShopWhereUniqueInput!]
-  deleteMany: [ShopScalarWhereInput!]
-  disconnect: [ShopWhereUniqueInput!]
-  set: [ShopWhereUniqueInput!]
-  update: [ShopUpdateWithWhereUniqueWithoutProductsInput!]
-  updateMany: [ShopUpdateManyWithWhereWithoutProductsInput!]
-  upsert: [ShopUpsertWithWhereUniqueWithoutProductsInput!]
-}
-
-input ShopUpdateOneRequiredWithoutShipmentsInput {
+input ShopUpdateOneRequiredWithoutRequestsInput {
   connect: ShopWhereUniqueInput
-  connectOrCreate: ShopCreateOrConnectWithoutShipmentsInput
-  create: ShopCreateWithoutShipmentsInput
-  update: ShopUpdateWithoutShipmentsInput
-  upsert: ShopUpsertWithoutShipmentsInput
+  connectOrCreate: ShopCreateOrConnectWithoutRequestsInput
+  create: ShopCreateWithoutRequestsInput
+  update: ShopUpdateWithoutRequestsInput
+  upsert: ShopUpsertWithoutRequestsInput
 }
 
-input ShopUpdateWithWhereUniqueWithoutOwnerInput {
-  data: ShopUpdateWithoutOwnerInput!
+input ShopUpdateOneWithoutTransactionsInput {
+  connect: ShopWhereUniqueInput
+  connectOrCreate: ShopCreateOrConnectWithoutTransactionsInput
+  create: ShopCreateWithoutTransactionsInput
+  delete: Boolean
+  disconnect: Boolean
+  update: ShopUpdateWithoutTransactionsInput
+  upsert: ShopUpsertWithoutTransactionsInput
+}
+
+input ShopUpdateWithWhereUniqueWithoutShopOwnerInput {
+  data: ShopUpdateWithoutShopOwnerInput!
   where: ShopWhereUniqueInput!
 }
 
-input ShopUpdateWithWhereUniqueWithoutProductsInput {
-  data: ShopUpdateWithoutProductsInput!
-  where: ShopWhereUniqueInput!
-}
-
-input ShopUpdateWithoutOwnerInput {
+input ShopUpdateWithoutRequestsInput {
   id: StringFieldUpdateOperationsInput
   name: StringFieldUpdateOperationsInput
-  products: ProductUpdateManyWithoutShopsInput
-  shipments: ShipmentUpdateManyWithoutShopInput
+  shopOwner: UserUpdateOneRequiredWithoutShopsInput
+  transactions: TransactionUpdateManyWithoutShopInput
 }
 
-input ShopUpdateWithoutProductsInput {
+input ShopUpdateWithoutShopOwnerInput {
   id: StringFieldUpdateOperationsInput
   name: StringFieldUpdateOperationsInput
-  owner: UserUpdateOneRequiredWithoutShopsInput
-  shipments: ShipmentUpdateManyWithoutShopInput
+  requests: RequestUpdateManyWithoutShopInput
+  transactions: TransactionUpdateManyWithoutShopInput
 }
 
-input ShopUpdateWithoutShipmentsInput {
+input ShopUpdateWithoutTransactionsInput {
   id: StringFieldUpdateOperationsInput
   name: StringFieldUpdateOperationsInput
-  owner: UserUpdateOneRequiredWithoutShopsInput
-  products: ProductUpdateManyWithoutShopsInput
+  requests: RequestUpdateManyWithoutShopInput
+  shopOwner: UserUpdateOneRequiredWithoutShopsInput
 }
 
-input ShopUpsertWithWhereUniqueWithoutOwnerInput {
-  create: ShopCreateWithoutOwnerInput!
-  update: ShopUpdateWithoutOwnerInput!
+input ShopUpsertWithWhereUniqueWithoutShopOwnerInput {
+  create: ShopCreateWithoutShopOwnerInput!
+  update: ShopUpdateWithoutShopOwnerInput!
   where: ShopWhereUniqueInput!
 }
 
-input ShopUpsertWithWhereUniqueWithoutProductsInput {
-  create: ShopCreateWithoutProductsInput!
-  update: ShopUpdateWithoutProductsInput!
-  where: ShopWhereUniqueInput!
+input ShopUpsertWithoutRequestsInput {
+  create: ShopCreateWithoutRequestsInput!
+  update: ShopUpdateWithoutRequestsInput!
 }
 
-input ShopUpsertWithoutShipmentsInput {
-  create: ShopCreateWithoutShipmentsInput!
-  update: ShopUpdateWithoutShipmentsInput!
+input ShopUpsertWithoutTransactionsInput {
+  create: ShopCreateWithoutTransactionsInput!
+  update: ShopUpdateWithoutTransactionsInput!
 }
 
 input ShopWhereUniqueInput {
   id: String
-  name: String
 }
 
 input SignInInput {
@@ -929,13 +1001,296 @@ input StringFilter {
   startsWith: String
 }
 
+input StringNullableFilter {
+  contains: String
+  endsWith: String
+  equals: String
+  gt: String
+  gte: String
+  in: [String!]
+  lt: String
+  lte: String
+  mode: QueryMode
+  not: NestedStringNullableFilter
+  notIn: [String!]
+  startsWith: String
+}
+
+type Transaction {
+  amount: Float!
+  id: String!
+  manufacturer: Manufacturer
+  product: Product!
+  shop: Shop
+}
+
+input TransactionCreateInput {
+  amount: Float!
+  createdAt: DateTime
+  id: String
+  manufacturer: ManufacturerCreateNestedOneWithoutTransactionsInput
+  product: ProductCreateNestedOneWithoutTransactionsInput!
+  shop: ShopCreateNestedOneWithoutTransactionsInput
+}
+
+input TransactionCreateManyManufacturerInput {
+  amount: Float!
+  createdAt: DateTime
+  id: String
+  productId: String!
+  shopId: String
+}
+
+input TransactionCreateManyManufacturerInputEnvelope {
+  data: [TransactionCreateManyManufacturerInput!]
+  skipDuplicates: Boolean
+}
+
+input TransactionCreateManyProductInput {
+  amount: Float!
+  createdAt: DateTime
+  id: String
+  manufacturerid: String
+  shopId: String
+}
+
+input TransactionCreateManyProductInputEnvelope {
+  data: [TransactionCreateManyProductInput!]
+  skipDuplicates: Boolean
+}
+
+input TransactionCreateManyShopInput {
+  amount: Float!
+  createdAt: DateTime
+  id: String
+  manufacturerid: String
+  productId: String!
+}
+
+input TransactionCreateManyShopInputEnvelope {
+  data: [TransactionCreateManyShopInput!]
+  skipDuplicates: Boolean
+}
+
+input TransactionCreateNestedManyWithoutManufacturerInput {
+  connect: [TransactionWhereUniqueInput!]
+  connectOrCreate: [TransactionCreateOrConnectWithoutManufacturerInput!]
+  create: [TransactionCreateWithoutManufacturerInput!]
+  createMany: TransactionCreateManyManufacturerInputEnvelope
+}
+
+input TransactionCreateNestedManyWithoutProductInput {
+  connect: [TransactionWhereUniqueInput!]
+  connectOrCreate: [TransactionCreateOrConnectWithoutProductInput!]
+  create: [TransactionCreateWithoutProductInput!]
+  createMany: TransactionCreateManyProductInputEnvelope
+}
+
+input TransactionCreateNestedManyWithoutShopInput {
+  connect: [TransactionWhereUniqueInput!]
+  connectOrCreate: [TransactionCreateOrConnectWithoutShopInput!]
+  create: [TransactionCreateWithoutShopInput!]
+  createMany: TransactionCreateManyShopInputEnvelope
+}
+
+input TransactionCreateOrConnectWithoutManufacturerInput {
+  create: TransactionCreateWithoutManufacturerInput!
+  where: TransactionWhereUniqueInput!
+}
+
+input TransactionCreateOrConnectWithoutProductInput {
+  create: TransactionCreateWithoutProductInput!
+  where: TransactionWhereUniqueInput!
+}
+
+input TransactionCreateOrConnectWithoutShopInput {
+  create: TransactionCreateWithoutShopInput!
+  where: TransactionWhereUniqueInput!
+}
+
+input TransactionCreateWithoutManufacturerInput {
+  amount: Float!
+  createdAt: DateTime
+  id: String
+  product: ProductCreateNestedOneWithoutTransactionsInput!
+  shop: ShopCreateNestedOneWithoutTransactionsInput
+}
+
+input TransactionCreateWithoutProductInput {
+  amount: Float!
+  createdAt: DateTime
+  id: String
+  manufacturer: ManufacturerCreateNestedOneWithoutTransactionsInput
+  shop: ShopCreateNestedOneWithoutTransactionsInput
+}
+
+input TransactionCreateWithoutShopInput {
+  amount: Float!
+  createdAt: DateTime
+  id: String
+  manufacturer: ManufacturerCreateNestedOneWithoutTransactionsInput
+  product: ProductCreateNestedOneWithoutTransactionsInput!
+}
+
+input TransactionScalarWhereInput {
+  AND: [TransactionScalarWhereInput!]
+  NOT: [TransactionScalarWhereInput!]
+  OR: [TransactionScalarWhereInput!]
+  amount: FloatFilter
+  createdAt: DateTimeFilter
+  id: StringFilter
+  manufacturerid: StringNullableFilter
+  productId: StringFilter
+  shopId: StringNullableFilter
+}
+
+input TransactionUpdateInput {
+  amount: FloatFieldUpdateOperationsInput
+  createdAt: DateTimeFieldUpdateOperationsInput
+  id: StringFieldUpdateOperationsInput
+  manufacturer: ManufacturerUpdateOneWithoutTransactionsInput
+  product: ProductUpdateOneRequiredWithoutTransactionsInput
+  shop: ShopUpdateOneWithoutTransactionsInput
+}
+
+input TransactionUpdateManyMutationInput {
+  amount: FloatFieldUpdateOperationsInput
+  createdAt: DateTimeFieldUpdateOperationsInput
+  id: StringFieldUpdateOperationsInput
+}
+
+input TransactionUpdateManyWithWhereWithoutManufacturerInput {
+  data: TransactionUpdateManyMutationInput!
+  where: TransactionScalarWhereInput!
+}
+
+input TransactionUpdateManyWithWhereWithoutProductInput {
+  data: TransactionUpdateManyMutationInput!
+  where: TransactionScalarWhereInput!
+}
+
+input TransactionUpdateManyWithWhereWithoutShopInput {
+  data: TransactionUpdateManyMutationInput!
+  where: TransactionScalarWhereInput!
+}
+
+input TransactionUpdateManyWithoutManufacturerInput {
+  connect: [TransactionWhereUniqueInput!]
+  connectOrCreate: [TransactionCreateOrConnectWithoutManufacturerInput!]
+  create: [TransactionCreateWithoutManufacturerInput!]
+  createMany: TransactionCreateManyManufacturerInputEnvelope
+  delete: [TransactionWhereUniqueInput!]
+  deleteMany: [TransactionScalarWhereInput!]
+  disconnect: [TransactionWhereUniqueInput!]
+  set: [TransactionWhereUniqueInput!]
+  update: [TransactionUpdateWithWhereUniqueWithoutManufacturerInput!]
+  updateMany: [TransactionUpdateManyWithWhereWithoutManufacturerInput!]
+  upsert: [TransactionUpsertWithWhereUniqueWithoutManufacturerInput!]
+}
+
+input TransactionUpdateManyWithoutProductInput {
+  connect: [TransactionWhereUniqueInput!]
+  connectOrCreate: [TransactionCreateOrConnectWithoutProductInput!]
+  create: [TransactionCreateWithoutProductInput!]
+  createMany: TransactionCreateManyProductInputEnvelope
+  delete: [TransactionWhereUniqueInput!]
+  deleteMany: [TransactionScalarWhereInput!]
+  disconnect: [TransactionWhereUniqueInput!]
+  set: [TransactionWhereUniqueInput!]
+  update: [TransactionUpdateWithWhereUniqueWithoutProductInput!]
+  updateMany: [TransactionUpdateManyWithWhereWithoutProductInput!]
+  upsert: [TransactionUpsertWithWhereUniqueWithoutProductInput!]
+}
+
+input TransactionUpdateManyWithoutShopInput {
+  connect: [TransactionWhereUniqueInput!]
+  connectOrCreate: [TransactionCreateOrConnectWithoutShopInput!]
+  create: [TransactionCreateWithoutShopInput!]
+  createMany: TransactionCreateManyShopInputEnvelope
+  delete: [TransactionWhereUniqueInput!]
+  deleteMany: [TransactionScalarWhereInput!]
+  disconnect: [TransactionWhereUniqueInput!]
+  set: [TransactionWhereUniqueInput!]
+  update: [TransactionUpdateWithWhereUniqueWithoutShopInput!]
+  updateMany: [TransactionUpdateManyWithWhereWithoutShopInput!]
+  upsert: [TransactionUpsertWithWhereUniqueWithoutShopInput!]
+}
+
+input TransactionUpdateWithWhereUniqueWithoutManufacturerInput {
+  data: TransactionUpdateWithoutManufacturerInput!
+  where: TransactionWhereUniqueInput!
+}
+
+input TransactionUpdateWithWhereUniqueWithoutProductInput {
+  data: TransactionUpdateWithoutProductInput!
+  where: TransactionWhereUniqueInput!
+}
+
+input TransactionUpdateWithWhereUniqueWithoutShopInput {
+  data: TransactionUpdateWithoutShopInput!
+  where: TransactionWhereUniqueInput!
+}
+
+input TransactionUpdateWithoutManufacturerInput {
+  amount: FloatFieldUpdateOperationsInput
+  createdAt: DateTimeFieldUpdateOperationsInput
+  id: StringFieldUpdateOperationsInput
+  product: ProductUpdateOneRequiredWithoutTransactionsInput
+  shop: ShopUpdateOneWithoutTransactionsInput
+}
+
+input TransactionUpdateWithoutProductInput {
+  amount: FloatFieldUpdateOperationsInput
+  createdAt: DateTimeFieldUpdateOperationsInput
+  id: StringFieldUpdateOperationsInput
+  manufacturer: ManufacturerUpdateOneWithoutTransactionsInput
+  shop: ShopUpdateOneWithoutTransactionsInput
+}
+
+input TransactionUpdateWithoutShopInput {
+  amount: FloatFieldUpdateOperationsInput
+  createdAt: DateTimeFieldUpdateOperationsInput
+  id: StringFieldUpdateOperationsInput
+  manufacturer: ManufacturerUpdateOneWithoutTransactionsInput
+  product: ProductUpdateOneRequiredWithoutTransactionsInput
+}
+
+input TransactionUpsertWithWhereUniqueWithoutManufacturerInput {
+  create: TransactionCreateWithoutManufacturerInput!
+  update: TransactionUpdateWithoutManufacturerInput!
+  where: TransactionWhereUniqueInput!
+}
+
+input TransactionUpsertWithWhereUniqueWithoutProductInput {
+  create: TransactionCreateWithoutProductInput!
+  update: TransactionUpdateWithoutProductInput!
+  where: TransactionWhereUniqueInput!
+}
+
+input TransactionUpsertWithWhereUniqueWithoutShopInput {
+  create: TransactionCreateWithoutShopInput!
+  update: TransactionUpdateWithoutShopInput!
+  where: TransactionWhereUniqueInput!
+}
+
+input TransactionWhereUniqueInput {
+  id: String
+}
+
+enum USER_ROLE {
+  ADMINISTRATOR
+  FIRM_OWNER
+  MANAGER
+  SHOP_OWNER
+}
+
 type User {
   email: String!
   firstname: String!
   id: String!
   lastname: String!
   manufactures(after: ManufacturerWhereUniqueInput, before: ManufacturerWhereUniqueInput, first: Int, last: Int): [Manufacturer!]!
-  role: Role
+  role: USER_ROLE!
   shops(after: ShopWhereUniqueInput, before: ShopWhereUniqueInput, first: Int, last: Int): [Shop!]!
 }
 
@@ -968,8 +1323,8 @@ input UserCreateWithoutManufacturesInput {
   id: String
   lastname: String!
   password: String!
-  role: Role
-  shops: ShopCreateNestedManyWithoutOwnerInput
+  role: USER_ROLE
+  shops: ShopCreateNestedManyWithoutShopOwnerInput
   tokenVersion: Int
 }
 
@@ -981,7 +1336,7 @@ input UserCreateWithoutShopsInput {
   lastname: String!
   manufactures: ManufacturerCreateNestedManyWithoutOwnerInput
   password: String!
-  role: Role
+  role: USER_ROLE
   tokenVersion: Int
 }
 
@@ -1008,8 +1363,8 @@ input UserUpdateWithoutManufacturesInput {
   id: StringFieldUpdateOperationsInput
   lastname: StringFieldUpdateOperationsInput
   password: StringFieldUpdateOperationsInput
-  role: NullableEnumRoleFieldUpdateOperationsInput
-  shops: ShopUpdateManyWithoutOwnerInput
+  role: EnumUSER_ROLEFieldUpdateOperationsInput
+  shops: ShopUpdateManyWithoutShopOwnerInput
   tokenVersion: NullableIntFieldUpdateOperationsInput
 }
 
@@ -1021,7 +1376,7 @@ input UserUpdateWithoutShopsInput {
   lastname: StringFieldUpdateOperationsInput
   manufactures: ManufacturerUpdateManyWithoutOwnerInput
   password: StringFieldUpdateOperationsInput
-  role: NullableEnumRoleFieldUpdateOperationsInput
+  role: EnumUSER_ROLEFieldUpdateOperationsInput
   tokenVersion: NullableIntFieldUpdateOperationsInput
 }
 

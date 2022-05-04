@@ -19,10 +19,18 @@ declare global {
 }
 
 export interface NexusGenInputs {
-  CreateShipmentArgs: { // input type
-    count: number; // Int!
+  ApproveRequestArgs: { // input type
+    requestId: string; // String!
+  }
+  ApproveShipmentArgs: { // input type
     productId: string; // String!
-    shopId: string; // String!
+  }
+  BoolFieldUpdateOperationsInput: { // input type
+    set?: boolean | null; // Boolean
+  }
+  BoolFilter: { // input type
+    equals?: boolean | null; // Boolean
+    not?: NexusGenInputs['NestedBoolFilter'] | null; // NestedBoolFilter
   }
   CreateUserInput: { // input type
     email: string; // String!
@@ -43,6 +51,9 @@ export interface NexusGenInputs {
     lte?: NexusGenScalars['DateTime'] | null; // DateTime
     not?: NexusGenInputs['NestedDateTimeFilter'] | null; // NestedDateTimeFilter
     notIn?: NexusGenScalars['DateTime'][] | null; // [DateTime!]
+  }
+  EnumUSER_ROLEFieldUpdateOperationsInput: { // input type
+    set?: NexusGenEnums['USER_ROLE'] | null; // USER_ROLE
   }
   FloatFieldUpdateOperationsInput: { // input type
     decrement?: number | null; // Float
@@ -66,6 +77,7 @@ export interface NexusGenInputs {
     name: string; // String!
     owner: NexusGenInputs['UserCreateNestedOneWithoutManufacturesInput']; // UserCreateNestedOneWithoutManufacturesInput!
     products?: NexusGenInputs['ProductCreateNestedManyWithoutManufacturerInput'] | null; // ProductCreateNestedManyWithoutManufacturerInput
+    transactions?: NexusGenInputs['TransactionCreateNestedManyWithoutManufacturerInput'] | null; // TransactionCreateNestedManyWithoutManufacturerInput
   }
   ManufacturerCreateManyOwnerInput: { // input type
     id?: string | null; // String
@@ -86,6 +98,11 @@ export interface NexusGenInputs {
     connectOrCreate?: NexusGenInputs['ManufacturerCreateOrConnectWithoutProductsInput'] | null; // ManufacturerCreateOrConnectWithoutProductsInput
     create?: NexusGenInputs['ManufacturerCreateWithoutProductsInput'] | null; // ManufacturerCreateWithoutProductsInput
   }
+  ManufacturerCreateNestedOneWithoutTransactionsInput: { // input type
+    connect?: NexusGenInputs['ManufacturerWhereUniqueInput'] | null; // ManufacturerWhereUniqueInput
+    connectOrCreate?: NexusGenInputs['ManufacturerCreateOrConnectWithoutTransactionsInput'] | null; // ManufacturerCreateOrConnectWithoutTransactionsInput
+    create?: NexusGenInputs['ManufacturerCreateWithoutTransactionsInput'] | null; // ManufacturerCreateWithoutTransactionsInput
+  }
   ManufacturerCreateOrConnectWithoutOwnerInput: { // input type
     create: NexusGenInputs['ManufacturerCreateWithoutOwnerInput']; // ManufacturerCreateWithoutOwnerInput!
     where: NexusGenInputs['ManufacturerWhereUniqueInput']; // ManufacturerWhereUniqueInput!
@@ -94,15 +111,27 @@ export interface NexusGenInputs {
     create: NexusGenInputs['ManufacturerCreateWithoutProductsInput']; // ManufacturerCreateWithoutProductsInput!
     where: NexusGenInputs['ManufacturerWhereUniqueInput']; // ManufacturerWhereUniqueInput!
   }
+  ManufacturerCreateOrConnectWithoutTransactionsInput: { // input type
+    create: NexusGenInputs['ManufacturerCreateWithoutTransactionsInput']; // ManufacturerCreateWithoutTransactionsInput!
+    where: NexusGenInputs['ManufacturerWhereUniqueInput']; // ManufacturerWhereUniqueInput!
+  }
   ManufacturerCreateWithoutOwnerInput: { // input type
     id?: string | null; // String
     name: string; // String!
     products?: NexusGenInputs['ProductCreateNestedManyWithoutManufacturerInput'] | null; // ProductCreateNestedManyWithoutManufacturerInput
+    transactions?: NexusGenInputs['TransactionCreateNestedManyWithoutManufacturerInput'] | null; // TransactionCreateNestedManyWithoutManufacturerInput
   }
   ManufacturerCreateWithoutProductsInput: { // input type
     id?: string | null; // String
     name: string; // String!
     owner: NexusGenInputs['UserCreateNestedOneWithoutManufacturesInput']; // UserCreateNestedOneWithoutManufacturesInput!
+    transactions?: NexusGenInputs['TransactionCreateNestedManyWithoutManufacturerInput'] | null; // TransactionCreateNestedManyWithoutManufacturerInput
+  }
+  ManufacturerCreateWithoutTransactionsInput: { // input type
+    id?: string | null; // String
+    name: string; // String!
+    owner: NexusGenInputs['UserCreateNestedOneWithoutManufacturesInput']; // UserCreateNestedOneWithoutManufacturesInput!
+    products?: NexusGenInputs['ProductCreateNestedManyWithoutManufacturerInput'] | null; // ProductCreateNestedManyWithoutManufacturerInput
   }
   ManufacturerScalarWhereInput: { // input type
     AND?: NexusGenInputs['ManufacturerScalarWhereInput'][] | null; // [ManufacturerScalarWhereInput!]
@@ -117,6 +146,7 @@ export interface NexusGenInputs {
     name?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
     owner?: NexusGenInputs['UserUpdateOneRequiredWithoutManufacturesInput'] | null; // UserUpdateOneRequiredWithoutManufacturesInput
     products?: NexusGenInputs['ProductUpdateManyWithoutManufacturerInput'] | null; // ProductUpdateManyWithoutManufacturerInput
+    transactions?: NexusGenInputs['TransactionUpdateManyWithoutManufacturerInput'] | null; // TransactionUpdateManyWithoutManufacturerInput
   }
   ManufacturerUpdateManyMutationInput: { // input type
     id?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
@@ -146,6 +176,15 @@ export interface NexusGenInputs {
     update?: NexusGenInputs['ManufacturerUpdateWithoutProductsInput'] | null; // ManufacturerUpdateWithoutProductsInput
     upsert?: NexusGenInputs['ManufacturerUpsertWithoutProductsInput'] | null; // ManufacturerUpsertWithoutProductsInput
   }
+  ManufacturerUpdateOneWithoutTransactionsInput: { // input type
+    connect?: NexusGenInputs['ManufacturerWhereUniqueInput'] | null; // ManufacturerWhereUniqueInput
+    connectOrCreate?: NexusGenInputs['ManufacturerCreateOrConnectWithoutTransactionsInput'] | null; // ManufacturerCreateOrConnectWithoutTransactionsInput
+    create?: NexusGenInputs['ManufacturerCreateWithoutTransactionsInput'] | null; // ManufacturerCreateWithoutTransactionsInput
+    delete?: boolean | null; // Boolean
+    disconnect?: boolean | null; // Boolean
+    update?: NexusGenInputs['ManufacturerUpdateWithoutTransactionsInput'] | null; // ManufacturerUpdateWithoutTransactionsInput
+    upsert?: NexusGenInputs['ManufacturerUpsertWithoutTransactionsInput'] | null; // ManufacturerUpsertWithoutTransactionsInput
+  }
   ManufacturerUpdateWithWhereUniqueWithoutOwnerInput: { // input type
     data: NexusGenInputs['ManufacturerUpdateWithoutOwnerInput']; // ManufacturerUpdateWithoutOwnerInput!
     where: NexusGenInputs['ManufacturerWhereUniqueInput']; // ManufacturerWhereUniqueInput!
@@ -154,11 +193,19 @@ export interface NexusGenInputs {
     id?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
     name?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
     products?: NexusGenInputs['ProductUpdateManyWithoutManufacturerInput'] | null; // ProductUpdateManyWithoutManufacturerInput
+    transactions?: NexusGenInputs['TransactionUpdateManyWithoutManufacturerInput'] | null; // TransactionUpdateManyWithoutManufacturerInput
   }
   ManufacturerUpdateWithoutProductsInput: { // input type
     id?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
     name?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
     owner?: NexusGenInputs['UserUpdateOneRequiredWithoutManufacturesInput'] | null; // UserUpdateOneRequiredWithoutManufacturesInput
+    transactions?: NexusGenInputs['TransactionUpdateManyWithoutManufacturerInput'] | null; // TransactionUpdateManyWithoutManufacturerInput
+  }
+  ManufacturerUpdateWithoutTransactionsInput: { // input type
+    id?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
+    name?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
+    owner?: NexusGenInputs['UserUpdateOneRequiredWithoutManufacturesInput'] | null; // UserUpdateOneRequiredWithoutManufacturesInput
+    products?: NexusGenInputs['ProductUpdateManyWithoutManufacturerInput'] | null; // ProductUpdateManyWithoutManufacturerInput
   }
   ManufacturerUpsertWithWhereUniqueWithoutOwnerInput: { // input type
     create: NexusGenInputs['ManufacturerCreateWithoutOwnerInput']; // ManufacturerCreateWithoutOwnerInput!
@@ -169,8 +216,16 @@ export interface NexusGenInputs {
     create: NexusGenInputs['ManufacturerCreateWithoutProductsInput']; // ManufacturerCreateWithoutProductsInput!
     update: NexusGenInputs['ManufacturerUpdateWithoutProductsInput']; // ManufacturerUpdateWithoutProductsInput!
   }
+  ManufacturerUpsertWithoutTransactionsInput: { // input type
+    create: NexusGenInputs['ManufacturerCreateWithoutTransactionsInput']; // ManufacturerCreateWithoutTransactionsInput!
+    update: NexusGenInputs['ManufacturerUpdateWithoutTransactionsInput']; // ManufacturerUpdateWithoutTransactionsInput!
+  }
   ManufacturerWhereUniqueInput: { // input type
     id?: string | null; // String
+  }
+  NestedBoolFilter: { // input type
+    equals?: boolean | null; // Boolean
+    not?: NexusGenInputs['NestedBoolFilter'] | null; // NestedBoolFilter
   }
   NestedDateTimeFilter: { // input type
     equals?: NexusGenScalars['DateTime'] | null; // DateTime
@@ -205,8 +260,18 @@ export interface NexusGenInputs {
     notIn?: string[] | null; // [String!]
     startsWith?: string | null; // String
   }
-  NullableEnumRoleFieldUpdateOperationsInput: { // input type
-    set?: NexusGenEnums['Role'] | null; // Role
+  NestedStringNullableFilter: { // input type
+    contains?: string | null; // String
+    endsWith?: string | null; // String
+    equals?: string | null; // String
+    gt?: string | null; // String
+    gte?: string | null; // String
+    in?: string[] | null; // [String!]
+    lt?: string | null; // String
+    lte?: string | null; // String
+    not?: NexusGenInputs['NestedStringNullableFilter'] | null; // NestedStringNullableFilter
+    notIn?: string[] | null; // [String!]
+    startsWith?: string | null; // String
   }
   NullableIntFieldUpdateOperationsInput: { // input type
     decrement?: number | null; // Int
@@ -216,22 +281,24 @@ export interface NexusGenInputs {
     set?: number | null; // Int
   }
   ProductCreateInput: { // input type
-    count: number; // Float!
+    amount: number; // Float!
     expirationDate: NexusGenScalars['DateTime']; // DateTime!
     id?: string | null; // String
     manufacturer: NexusGenInputs['ManufacturerCreateNestedOneWithoutProductsInput']; // ManufacturerCreateNestedOneWithoutProductsInput!
     name: string; // String!
-    recieptDate?: NexusGenScalars['DateTime'] | null; // DateTime
-    shipments?: NexusGenInputs['ShipmentCreateNestedManyWithoutProductInput'] | null; // ShipmentCreateNestedManyWithoutProductInput
-    shops?: NexusGenInputs['ShopCreateNestedManyWithoutProductsInput'] | null; // ShopCreateNestedManyWithoutProductsInput
+    registered: boolean; // Boolean!
+    requests?: NexusGenInputs['RequestCreateNestedManyWithoutProductInput'] | null; // RequestCreateNestedManyWithoutProductInput
+    stockDate?: NexusGenScalars['DateTime'] | null; // DateTime
+    transactions?: NexusGenInputs['TransactionCreateNestedManyWithoutProductInput'] | null; // TransactionCreateNestedManyWithoutProductInput
     unit: string; // String!
   }
   ProductCreateManyManufacturerInput: { // input type
-    count: number; // Float!
+    amount: number; // Float!
     expirationDate: NexusGenScalars['DateTime']; // DateTime!
     id?: string | null; // String
     name: string; // String!
-    recieptDate?: NexusGenScalars['DateTime'] | null; // DateTime
+    registered: boolean; // Boolean!
+    stockDate?: NexusGenScalars['DateTime'] | null; // DateTime
     unit: string; // String!
   }
   ProductCreateManyManufacturerInputEnvelope: { // input type
@@ -244,94 +311,96 @@ export interface NexusGenInputs {
     create?: NexusGenInputs['ProductCreateWithoutManufacturerInput'][] | null; // [ProductCreateWithoutManufacturerInput!]
     createMany?: NexusGenInputs['ProductCreateManyManufacturerInputEnvelope'] | null; // ProductCreateManyManufacturerInputEnvelope
   }
-  ProductCreateNestedManyWithoutShopsInput: { // input type
-    connect?: NexusGenInputs['ProductWhereUniqueInput'][] | null; // [ProductWhereUniqueInput!]
-    connectOrCreate?: NexusGenInputs['ProductCreateOrConnectWithoutShopsInput'][] | null; // [ProductCreateOrConnectWithoutShopsInput!]
-    create?: NexusGenInputs['ProductCreateWithoutShopsInput'][] | null; // [ProductCreateWithoutShopsInput!]
-  }
-  ProductCreateNestedOneWithoutShipmentsInput: { // input type
+  ProductCreateNestedOneWithoutRequestsInput: { // input type
     connect?: NexusGenInputs['ProductWhereUniqueInput'] | null; // ProductWhereUniqueInput
-    connectOrCreate?: NexusGenInputs['ProductCreateOrConnectWithoutShipmentsInput'] | null; // ProductCreateOrConnectWithoutShipmentsInput
-    create?: NexusGenInputs['ProductCreateWithoutShipmentsInput'] | null; // ProductCreateWithoutShipmentsInput
+    connectOrCreate?: NexusGenInputs['ProductCreateOrConnectWithoutRequestsInput'] | null; // ProductCreateOrConnectWithoutRequestsInput
+    create?: NexusGenInputs['ProductCreateWithoutRequestsInput'] | null; // ProductCreateWithoutRequestsInput
+  }
+  ProductCreateNestedOneWithoutTransactionsInput: { // input type
+    connect?: NexusGenInputs['ProductWhereUniqueInput'] | null; // ProductWhereUniqueInput
+    connectOrCreate?: NexusGenInputs['ProductCreateOrConnectWithoutTransactionsInput'] | null; // ProductCreateOrConnectWithoutTransactionsInput
+    create?: NexusGenInputs['ProductCreateWithoutTransactionsInput'] | null; // ProductCreateWithoutTransactionsInput
   }
   ProductCreateOrConnectWithoutManufacturerInput: { // input type
     create: NexusGenInputs['ProductCreateWithoutManufacturerInput']; // ProductCreateWithoutManufacturerInput!
     where: NexusGenInputs['ProductWhereUniqueInput']; // ProductWhereUniqueInput!
   }
-  ProductCreateOrConnectWithoutShipmentsInput: { // input type
-    create: NexusGenInputs['ProductCreateWithoutShipmentsInput']; // ProductCreateWithoutShipmentsInput!
+  ProductCreateOrConnectWithoutRequestsInput: { // input type
+    create: NexusGenInputs['ProductCreateWithoutRequestsInput']; // ProductCreateWithoutRequestsInput!
     where: NexusGenInputs['ProductWhereUniqueInput']; // ProductWhereUniqueInput!
   }
-  ProductCreateOrConnectWithoutShopsInput: { // input type
-    create: NexusGenInputs['ProductCreateWithoutShopsInput']; // ProductCreateWithoutShopsInput!
+  ProductCreateOrConnectWithoutTransactionsInput: { // input type
+    create: NexusGenInputs['ProductCreateWithoutTransactionsInput']; // ProductCreateWithoutTransactionsInput!
     where: NexusGenInputs['ProductWhereUniqueInput']; // ProductWhereUniqueInput!
   }
   ProductCreateWithoutManufacturerInput: { // input type
-    count: number; // Float!
+    amount: number; // Float!
     expirationDate: NexusGenScalars['DateTime']; // DateTime!
     id?: string | null; // String
     name: string; // String!
-    recieptDate?: NexusGenScalars['DateTime'] | null; // DateTime
-    shipments?: NexusGenInputs['ShipmentCreateNestedManyWithoutProductInput'] | null; // ShipmentCreateNestedManyWithoutProductInput
-    shops?: NexusGenInputs['ShopCreateNestedManyWithoutProductsInput'] | null; // ShopCreateNestedManyWithoutProductsInput
+    registered: boolean; // Boolean!
+    requests?: NexusGenInputs['RequestCreateNestedManyWithoutProductInput'] | null; // RequestCreateNestedManyWithoutProductInput
+    stockDate?: NexusGenScalars['DateTime'] | null; // DateTime
+    transactions?: NexusGenInputs['TransactionCreateNestedManyWithoutProductInput'] | null; // TransactionCreateNestedManyWithoutProductInput
     unit: string; // String!
   }
-  ProductCreateWithoutShipmentsInput: { // input type
-    count: number; // Float!
+  ProductCreateWithoutRequestsInput: { // input type
+    amount: number; // Float!
     expirationDate: NexusGenScalars['DateTime']; // DateTime!
     id?: string | null; // String
     manufacturer: NexusGenInputs['ManufacturerCreateNestedOneWithoutProductsInput']; // ManufacturerCreateNestedOneWithoutProductsInput!
     name: string; // String!
-    recieptDate?: NexusGenScalars['DateTime'] | null; // DateTime
-    shops?: NexusGenInputs['ShopCreateNestedManyWithoutProductsInput'] | null; // ShopCreateNestedManyWithoutProductsInput
+    registered: boolean; // Boolean!
+    stockDate?: NexusGenScalars['DateTime'] | null; // DateTime
+    transactions?: NexusGenInputs['TransactionCreateNestedManyWithoutProductInput'] | null; // TransactionCreateNestedManyWithoutProductInput
     unit: string; // String!
   }
-  ProductCreateWithoutShopsInput: { // input type
-    count: number; // Float!
+  ProductCreateWithoutTransactionsInput: { // input type
+    amount: number; // Float!
     expirationDate: NexusGenScalars['DateTime']; // DateTime!
     id?: string | null; // String
     manufacturer: NexusGenInputs['ManufacturerCreateNestedOneWithoutProductsInput']; // ManufacturerCreateNestedOneWithoutProductsInput!
     name: string; // String!
-    recieptDate?: NexusGenScalars['DateTime'] | null; // DateTime
-    shipments?: NexusGenInputs['ShipmentCreateNestedManyWithoutProductInput'] | null; // ShipmentCreateNestedManyWithoutProductInput
+    registered: boolean; // Boolean!
+    requests?: NexusGenInputs['RequestCreateNestedManyWithoutProductInput'] | null; // RequestCreateNestedManyWithoutProductInput
+    stockDate?: NexusGenScalars['DateTime'] | null; // DateTime
     unit: string; // String!
   }
   ProductScalarWhereInput: { // input type
     AND?: NexusGenInputs['ProductScalarWhereInput'][] | null; // [ProductScalarWhereInput!]
     NOT?: NexusGenInputs['ProductScalarWhereInput'][] | null; // [ProductScalarWhereInput!]
     OR?: NexusGenInputs['ProductScalarWhereInput'][] | null; // [ProductScalarWhereInput!]
-    count?: NexusGenInputs['FloatFilter'] | null; // FloatFilter
+    amount?: NexusGenInputs['FloatFilter'] | null; // FloatFilter
     expirationDate?: NexusGenInputs['DateTimeFilter'] | null; // DateTimeFilter
     id?: NexusGenInputs['StringFilter'] | null; // StringFilter
     manufacturerId?: NexusGenInputs['StringFilter'] | null; // StringFilter
     name?: NexusGenInputs['StringFilter'] | null; // StringFilter
-    recieptDate?: NexusGenInputs['DateTimeFilter'] | null; // DateTimeFilter
+    registered?: NexusGenInputs['BoolFilter'] | null; // BoolFilter
+    stockDate?: NexusGenInputs['DateTimeFilter'] | null; // DateTimeFilter
     unit?: NexusGenInputs['StringFilter'] | null; // StringFilter
   }
   ProductUpdateInput: { // input type
-    count?: NexusGenInputs['FloatFieldUpdateOperationsInput'] | null; // FloatFieldUpdateOperationsInput
+    amount?: NexusGenInputs['FloatFieldUpdateOperationsInput'] | null; // FloatFieldUpdateOperationsInput
     expirationDate?: NexusGenInputs['DateTimeFieldUpdateOperationsInput'] | null; // DateTimeFieldUpdateOperationsInput
     id?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
     manufacturer?: NexusGenInputs['ManufacturerUpdateOneRequiredWithoutProductsInput'] | null; // ManufacturerUpdateOneRequiredWithoutProductsInput
     name?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
-    recieptDate?: NexusGenInputs['DateTimeFieldUpdateOperationsInput'] | null; // DateTimeFieldUpdateOperationsInput
-    shipments?: NexusGenInputs['ShipmentUpdateManyWithoutProductInput'] | null; // ShipmentUpdateManyWithoutProductInput
-    shops?: NexusGenInputs['ShopUpdateManyWithoutProductsInput'] | null; // ShopUpdateManyWithoutProductsInput
+    registered?: NexusGenInputs['BoolFieldUpdateOperationsInput'] | null; // BoolFieldUpdateOperationsInput
+    requests?: NexusGenInputs['RequestUpdateManyWithoutProductInput'] | null; // RequestUpdateManyWithoutProductInput
+    stockDate?: NexusGenInputs['DateTimeFieldUpdateOperationsInput'] | null; // DateTimeFieldUpdateOperationsInput
+    transactions?: NexusGenInputs['TransactionUpdateManyWithoutProductInput'] | null; // TransactionUpdateManyWithoutProductInput
     unit?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
   }
   ProductUpdateManyMutationInput: { // input type
-    count?: NexusGenInputs['FloatFieldUpdateOperationsInput'] | null; // FloatFieldUpdateOperationsInput
+    amount?: NexusGenInputs['FloatFieldUpdateOperationsInput'] | null; // FloatFieldUpdateOperationsInput
     expirationDate?: NexusGenInputs['DateTimeFieldUpdateOperationsInput'] | null; // DateTimeFieldUpdateOperationsInput
     id?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
     name?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
-    recieptDate?: NexusGenInputs['DateTimeFieldUpdateOperationsInput'] | null; // DateTimeFieldUpdateOperationsInput
+    registered?: NexusGenInputs['BoolFieldUpdateOperationsInput'] | null; // BoolFieldUpdateOperationsInput
+    stockDate?: NexusGenInputs['DateTimeFieldUpdateOperationsInput'] | null; // DateTimeFieldUpdateOperationsInput
     unit?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
   }
   ProductUpdateManyWithWhereWithoutManufacturerInput: { // input type
-    data: NexusGenInputs['ProductUpdateManyMutationInput']; // ProductUpdateManyMutationInput!
-    where: NexusGenInputs['ProductScalarWhereInput']; // ProductScalarWhereInput!
-  }
-  ProductUpdateManyWithWhereWithoutShopsInput: { // input type
     data: NexusGenInputs['ProductUpdateManyMutationInput']; // ProductUpdateManyMutationInput!
     where: NexusGenInputs['ProductScalarWhereInput']; // ProductScalarWhereInput!
   }
@@ -348,61 +417,55 @@ export interface NexusGenInputs {
     updateMany?: NexusGenInputs['ProductUpdateManyWithWhereWithoutManufacturerInput'][] | null; // [ProductUpdateManyWithWhereWithoutManufacturerInput!]
     upsert?: NexusGenInputs['ProductUpsertWithWhereUniqueWithoutManufacturerInput'][] | null; // [ProductUpsertWithWhereUniqueWithoutManufacturerInput!]
   }
-  ProductUpdateManyWithoutShopsInput: { // input type
-    connect?: NexusGenInputs['ProductWhereUniqueInput'][] | null; // [ProductWhereUniqueInput!]
-    connectOrCreate?: NexusGenInputs['ProductCreateOrConnectWithoutShopsInput'][] | null; // [ProductCreateOrConnectWithoutShopsInput!]
-    create?: NexusGenInputs['ProductCreateWithoutShopsInput'][] | null; // [ProductCreateWithoutShopsInput!]
-    delete?: NexusGenInputs['ProductWhereUniqueInput'][] | null; // [ProductWhereUniqueInput!]
-    deleteMany?: NexusGenInputs['ProductScalarWhereInput'][] | null; // [ProductScalarWhereInput!]
-    disconnect?: NexusGenInputs['ProductWhereUniqueInput'][] | null; // [ProductWhereUniqueInput!]
-    set?: NexusGenInputs['ProductWhereUniqueInput'][] | null; // [ProductWhereUniqueInput!]
-    update?: NexusGenInputs['ProductUpdateWithWhereUniqueWithoutShopsInput'][] | null; // [ProductUpdateWithWhereUniqueWithoutShopsInput!]
-    updateMany?: NexusGenInputs['ProductUpdateManyWithWhereWithoutShopsInput'][] | null; // [ProductUpdateManyWithWhereWithoutShopsInput!]
-    upsert?: NexusGenInputs['ProductUpsertWithWhereUniqueWithoutShopsInput'][] | null; // [ProductUpsertWithWhereUniqueWithoutShopsInput!]
-  }
-  ProductUpdateOneRequiredWithoutShipmentsInput: { // input type
+  ProductUpdateOneRequiredWithoutRequestsInput: { // input type
     connect?: NexusGenInputs['ProductWhereUniqueInput'] | null; // ProductWhereUniqueInput
-    connectOrCreate?: NexusGenInputs['ProductCreateOrConnectWithoutShipmentsInput'] | null; // ProductCreateOrConnectWithoutShipmentsInput
-    create?: NexusGenInputs['ProductCreateWithoutShipmentsInput'] | null; // ProductCreateWithoutShipmentsInput
-    update?: NexusGenInputs['ProductUpdateWithoutShipmentsInput'] | null; // ProductUpdateWithoutShipmentsInput
-    upsert?: NexusGenInputs['ProductUpsertWithoutShipmentsInput'] | null; // ProductUpsertWithoutShipmentsInput
+    connectOrCreate?: NexusGenInputs['ProductCreateOrConnectWithoutRequestsInput'] | null; // ProductCreateOrConnectWithoutRequestsInput
+    create?: NexusGenInputs['ProductCreateWithoutRequestsInput'] | null; // ProductCreateWithoutRequestsInput
+    update?: NexusGenInputs['ProductUpdateWithoutRequestsInput'] | null; // ProductUpdateWithoutRequestsInput
+    upsert?: NexusGenInputs['ProductUpsertWithoutRequestsInput'] | null; // ProductUpsertWithoutRequestsInput
+  }
+  ProductUpdateOneRequiredWithoutTransactionsInput: { // input type
+    connect?: NexusGenInputs['ProductWhereUniqueInput'] | null; // ProductWhereUniqueInput
+    connectOrCreate?: NexusGenInputs['ProductCreateOrConnectWithoutTransactionsInput'] | null; // ProductCreateOrConnectWithoutTransactionsInput
+    create?: NexusGenInputs['ProductCreateWithoutTransactionsInput'] | null; // ProductCreateWithoutTransactionsInput
+    update?: NexusGenInputs['ProductUpdateWithoutTransactionsInput'] | null; // ProductUpdateWithoutTransactionsInput
+    upsert?: NexusGenInputs['ProductUpsertWithoutTransactionsInput'] | null; // ProductUpsertWithoutTransactionsInput
   }
   ProductUpdateWithWhereUniqueWithoutManufacturerInput: { // input type
     data: NexusGenInputs['ProductUpdateWithoutManufacturerInput']; // ProductUpdateWithoutManufacturerInput!
     where: NexusGenInputs['ProductWhereUniqueInput']; // ProductWhereUniqueInput!
   }
-  ProductUpdateWithWhereUniqueWithoutShopsInput: { // input type
-    data: NexusGenInputs['ProductUpdateWithoutShopsInput']; // ProductUpdateWithoutShopsInput!
-    where: NexusGenInputs['ProductWhereUniqueInput']; // ProductWhereUniqueInput!
-  }
   ProductUpdateWithoutManufacturerInput: { // input type
-    count?: NexusGenInputs['FloatFieldUpdateOperationsInput'] | null; // FloatFieldUpdateOperationsInput
+    amount?: NexusGenInputs['FloatFieldUpdateOperationsInput'] | null; // FloatFieldUpdateOperationsInput
     expirationDate?: NexusGenInputs['DateTimeFieldUpdateOperationsInput'] | null; // DateTimeFieldUpdateOperationsInput
     id?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
     name?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
-    recieptDate?: NexusGenInputs['DateTimeFieldUpdateOperationsInput'] | null; // DateTimeFieldUpdateOperationsInput
-    shipments?: NexusGenInputs['ShipmentUpdateManyWithoutProductInput'] | null; // ShipmentUpdateManyWithoutProductInput
-    shops?: NexusGenInputs['ShopUpdateManyWithoutProductsInput'] | null; // ShopUpdateManyWithoutProductsInput
+    registered?: NexusGenInputs['BoolFieldUpdateOperationsInput'] | null; // BoolFieldUpdateOperationsInput
+    requests?: NexusGenInputs['RequestUpdateManyWithoutProductInput'] | null; // RequestUpdateManyWithoutProductInput
+    stockDate?: NexusGenInputs['DateTimeFieldUpdateOperationsInput'] | null; // DateTimeFieldUpdateOperationsInput
+    transactions?: NexusGenInputs['TransactionUpdateManyWithoutProductInput'] | null; // TransactionUpdateManyWithoutProductInput
     unit?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
   }
-  ProductUpdateWithoutShipmentsInput: { // input type
-    count?: NexusGenInputs['FloatFieldUpdateOperationsInput'] | null; // FloatFieldUpdateOperationsInput
+  ProductUpdateWithoutRequestsInput: { // input type
+    amount?: NexusGenInputs['FloatFieldUpdateOperationsInput'] | null; // FloatFieldUpdateOperationsInput
     expirationDate?: NexusGenInputs['DateTimeFieldUpdateOperationsInput'] | null; // DateTimeFieldUpdateOperationsInput
     id?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
     manufacturer?: NexusGenInputs['ManufacturerUpdateOneRequiredWithoutProductsInput'] | null; // ManufacturerUpdateOneRequiredWithoutProductsInput
     name?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
-    recieptDate?: NexusGenInputs['DateTimeFieldUpdateOperationsInput'] | null; // DateTimeFieldUpdateOperationsInput
-    shops?: NexusGenInputs['ShopUpdateManyWithoutProductsInput'] | null; // ShopUpdateManyWithoutProductsInput
+    registered?: NexusGenInputs['BoolFieldUpdateOperationsInput'] | null; // BoolFieldUpdateOperationsInput
+    stockDate?: NexusGenInputs['DateTimeFieldUpdateOperationsInput'] | null; // DateTimeFieldUpdateOperationsInput
+    transactions?: NexusGenInputs['TransactionUpdateManyWithoutProductInput'] | null; // TransactionUpdateManyWithoutProductInput
     unit?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
   }
-  ProductUpdateWithoutShopsInput: { // input type
-    count?: NexusGenInputs['FloatFieldUpdateOperationsInput'] | null; // FloatFieldUpdateOperationsInput
+  ProductUpdateWithoutTransactionsInput: { // input type
+    amount?: NexusGenInputs['FloatFieldUpdateOperationsInput'] | null; // FloatFieldUpdateOperationsInput
     expirationDate?: NexusGenInputs['DateTimeFieldUpdateOperationsInput'] | null; // DateTimeFieldUpdateOperationsInput
     id?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
     manufacturer?: NexusGenInputs['ManufacturerUpdateOneRequiredWithoutProductsInput'] | null; // ManufacturerUpdateOneRequiredWithoutProductsInput
     name?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
-    recieptDate?: NexusGenInputs['DateTimeFieldUpdateOperationsInput'] | null; // DateTimeFieldUpdateOperationsInput
-    shipments?: NexusGenInputs['ShipmentUpdateManyWithoutProductInput'] | null; // ShipmentUpdateManyWithoutProductInput
+    registered?: NexusGenInputs['BoolFieldUpdateOperationsInput'] | null; // BoolFieldUpdateOperationsInput
+    requests?: NexusGenInputs['RequestUpdateManyWithoutProductInput'] | null; // RequestUpdateManyWithoutProductInput
+    stockDate?: NexusGenInputs['DateTimeFieldUpdateOperationsInput'] | null; // DateTimeFieldUpdateOperationsInput
     unit?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
   }
   ProductUpsertWithWhereUniqueWithoutManufacturerInput: { // input type
@@ -410,219 +473,230 @@ export interface NexusGenInputs {
     update: NexusGenInputs['ProductUpdateWithoutManufacturerInput']; // ProductUpdateWithoutManufacturerInput!
     where: NexusGenInputs['ProductWhereUniqueInput']; // ProductWhereUniqueInput!
   }
-  ProductUpsertWithWhereUniqueWithoutShopsInput: { // input type
-    create: NexusGenInputs['ProductCreateWithoutShopsInput']; // ProductCreateWithoutShopsInput!
-    update: NexusGenInputs['ProductUpdateWithoutShopsInput']; // ProductUpdateWithoutShopsInput!
-    where: NexusGenInputs['ProductWhereUniqueInput']; // ProductWhereUniqueInput!
+  ProductUpsertWithoutRequestsInput: { // input type
+    create: NexusGenInputs['ProductCreateWithoutRequestsInput']; // ProductCreateWithoutRequestsInput!
+    update: NexusGenInputs['ProductUpdateWithoutRequestsInput']; // ProductUpdateWithoutRequestsInput!
   }
-  ProductUpsertWithoutShipmentsInput: { // input type
-    create: NexusGenInputs['ProductCreateWithoutShipmentsInput']; // ProductCreateWithoutShipmentsInput!
-    update: NexusGenInputs['ProductUpdateWithoutShipmentsInput']; // ProductUpdateWithoutShipmentsInput!
+  ProductUpsertWithoutTransactionsInput: { // input type
+    create: NexusGenInputs['ProductCreateWithoutTransactionsInput']; // ProductCreateWithoutTransactionsInput!
+    update: NexusGenInputs['ProductUpdateWithoutTransactionsInput']; // ProductUpdateWithoutTransactionsInput!
   }
   ProductWhereUniqueInput: { // input type
     id?: string | null; // String
   }
-  ShipmentCreateManyProductInput: { // input type
-    count: number; // Float!
-    createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
+  RequestCreateManyProductInput: { // input type
+    amount: number; // Float!
+    approved?: boolean | null; // Boolean
     id?: string | null; // String
     shopId: string; // String!
   }
-  ShipmentCreateManyProductInputEnvelope: { // input type
-    data?: NexusGenInputs['ShipmentCreateManyProductInput'][] | null; // [ShipmentCreateManyProductInput!]
+  RequestCreateManyProductInputEnvelope: { // input type
+    data?: NexusGenInputs['RequestCreateManyProductInput'][] | null; // [RequestCreateManyProductInput!]
     skipDuplicates?: boolean | null; // Boolean
   }
-  ShipmentCreateManyShopInput: { // input type
-    count: number; // Float!
-    createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
+  RequestCreateManyShopInput: { // input type
+    amount: number; // Float!
+    approved?: boolean | null; // Boolean
     id?: string | null; // String
     productId: string; // String!
   }
-  ShipmentCreateManyShopInputEnvelope: { // input type
-    data?: NexusGenInputs['ShipmentCreateManyShopInput'][] | null; // [ShipmentCreateManyShopInput!]
+  RequestCreateManyShopInputEnvelope: { // input type
+    data?: NexusGenInputs['RequestCreateManyShopInput'][] | null; // [RequestCreateManyShopInput!]
     skipDuplicates?: boolean | null; // Boolean
   }
-  ShipmentCreateNestedManyWithoutProductInput: { // input type
-    connect?: NexusGenInputs['ShipmentWhereUniqueInput'][] | null; // [ShipmentWhereUniqueInput!]
-    connectOrCreate?: NexusGenInputs['ShipmentCreateOrConnectWithoutProductInput'][] | null; // [ShipmentCreateOrConnectWithoutProductInput!]
-    create?: NexusGenInputs['ShipmentCreateWithoutProductInput'][] | null; // [ShipmentCreateWithoutProductInput!]
-    createMany?: NexusGenInputs['ShipmentCreateManyProductInputEnvelope'] | null; // ShipmentCreateManyProductInputEnvelope
+  RequestCreateNestedManyWithoutProductInput: { // input type
+    connect?: NexusGenInputs['RequestWhereUniqueInput'][] | null; // [RequestWhereUniqueInput!]
+    connectOrCreate?: NexusGenInputs['RequestCreateOrConnectWithoutProductInput'][] | null; // [RequestCreateOrConnectWithoutProductInput!]
+    create?: NexusGenInputs['RequestCreateWithoutProductInput'][] | null; // [RequestCreateWithoutProductInput!]
+    createMany?: NexusGenInputs['RequestCreateManyProductInputEnvelope'] | null; // RequestCreateManyProductInputEnvelope
   }
-  ShipmentCreateNestedManyWithoutShopInput: { // input type
-    connect?: NexusGenInputs['ShipmentWhereUniqueInput'][] | null; // [ShipmentWhereUniqueInput!]
-    connectOrCreate?: NexusGenInputs['ShipmentCreateOrConnectWithoutShopInput'][] | null; // [ShipmentCreateOrConnectWithoutShopInput!]
-    create?: NexusGenInputs['ShipmentCreateWithoutShopInput'][] | null; // [ShipmentCreateWithoutShopInput!]
-    createMany?: NexusGenInputs['ShipmentCreateManyShopInputEnvelope'] | null; // ShipmentCreateManyShopInputEnvelope
+  RequestCreateNestedManyWithoutShopInput: { // input type
+    connect?: NexusGenInputs['RequestWhereUniqueInput'][] | null; // [RequestWhereUniqueInput!]
+    connectOrCreate?: NexusGenInputs['RequestCreateOrConnectWithoutShopInput'][] | null; // [RequestCreateOrConnectWithoutShopInput!]
+    create?: NexusGenInputs['RequestCreateWithoutShopInput'][] | null; // [RequestCreateWithoutShopInput!]
+    createMany?: NexusGenInputs['RequestCreateManyShopInputEnvelope'] | null; // RequestCreateManyShopInputEnvelope
   }
-  ShipmentCreateOrConnectWithoutProductInput: { // input type
-    create: NexusGenInputs['ShipmentCreateWithoutProductInput']; // ShipmentCreateWithoutProductInput!
-    where: NexusGenInputs['ShipmentWhereUniqueInput']; // ShipmentWhereUniqueInput!
+  RequestCreateOrConnectWithoutProductInput: { // input type
+    create: NexusGenInputs['RequestCreateWithoutProductInput']; // RequestCreateWithoutProductInput!
+    where: NexusGenInputs['RequestWhereUniqueInput']; // RequestWhereUniqueInput!
   }
-  ShipmentCreateOrConnectWithoutShopInput: { // input type
-    create: NexusGenInputs['ShipmentCreateWithoutShopInput']; // ShipmentCreateWithoutShopInput!
-    where: NexusGenInputs['ShipmentWhereUniqueInput']; // ShipmentWhereUniqueInput!
+  RequestCreateOrConnectWithoutShopInput: { // input type
+    create: NexusGenInputs['RequestCreateWithoutShopInput']; // RequestCreateWithoutShopInput!
+    where: NexusGenInputs['RequestWhereUniqueInput']; // RequestWhereUniqueInput!
   }
-  ShipmentCreateWithoutProductInput: { // input type
-    count: number; // Float!
-    createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
+  RequestCreateWithoutProductInput: { // input type
+    amount: number; // Float!
+    approved?: boolean | null; // Boolean
     id?: string | null; // String
-    shop: NexusGenInputs['ShopCreateNestedOneWithoutShipmentsInput']; // ShopCreateNestedOneWithoutShipmentsInput!
+    shop: NexusGenInputs['ShopCreateNestedOneWithoutRequestsInput']; // ShopCreateNestedOneWithoutRequestsInput!
   }
-  ShipmentCreateWithoutShopInput: { // input type
-    count: number; // Float!
-    createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
+  RequestCreateWithoutShopInput: { // input type
+    amount: number; // Float!
+    approved?: boolean | null; // Boolean
     id?: string | null; // String
-    product: NexusGenInputs['ProductCreateNestedOneWithoutShipmentsInput']; // ProductCreateNestedOneWithoutShipmentsInput!
+    product: NexusGenInputs['ProductCreateNestedOneWithoutRequestsInput']; // ProductCreateNestedOneWithoutRequestsInput!
   }
-  ShipmentScalarWhereInput: { // input type
-    AND?: NexusGenInputs['ShipmentScalarWhereInput'][] | null; // [ShipmentScalarWhereInput!]
-    NOT?: NexusGenInputs['ShipmentScalarWhereInput'][] | null; // [ShipmentScalarWhereInput!]
-    OR?: NexusGenInputs['ShipmentScalarWhereInput'][] | null; // [ShipmentScalarWhereInput!]
-    count?: NexusGenInputs['FloatFilter'] | null; // FloatFilter
-    createdAt?: NexusGenInputs['DateTimeFilter'] | null; // DateTimeFilter
+  RequestProductArgs: { // input type
+    amount: number; // Float!
+    productId: string; // String!
+    shopId: string; // String!
+  }
+  RequestScalarWhereInput: { // input type
+    AND?: NexusGenInputs['RequestScalarWhereInput'][] | null; // [RequestScalarWhereInput!]
+    NOT?: NexusGenInputs['RequestScalarWhereInput'][] | null; // [RequestScalarWhereInput!]
+    OR?: NexusGenInputs['RequestScalarWhereInput'][] | null; // [RequestScalarWhereInput!]
+    amount?: NexusGenInputs['FloatFilter'] | null; // FloatFilter
+    approved?: NexusGenInputs['BoolFilter'] | null; // BoolFilter
     id?: NexusGenInputs['StringFilter'] | null; // StringFilter
     productId?: NexusGenInputs['StringFilter'] | null; // StringFilter
     shopId?: NexusGenInputs['StringFilter'] | null; // StringFilter
   }
-  ShipmentUpdateInput: { // input type
-    count?: NexusGenInputs['FloatFieldUpdateOperationsInput'] | null; // FloatFieldUpdateOperationsInput
-    createdAt?: NexusGenInputs['DateTimeFieldUpdateOperationsInput'] | null; // DateTimeFieldUpdateOperationsInput
+  RequestUpdateInput: { // input type
+    amount?: NexusGenInputs['FloatFieldUpdateOperationsInput'] | null; // FloatFieldUpdateOperationsInput
+    approved?: NexusGenInputs['BoolFieldUpdateOperationsInput'] | null; // BoolFieldUpdateOperationsInput
     id?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
-    product?: NexusGenInputs['ProductUpdateOneRequiredWithoutShipmentsInput'] | null; // ProductUpdateOneRequiredWithoutShipmentsInput
-    shop?: NexusGenInputs['ShopUpdateOneRequiredWithoutShipmentsInput'] | null; // ShopUpdateOneRequiredWithoutShipmentsInput
+    product?: NexusGenInputs['ProductUpdateOneRequiredWithoutRequestsInput'] | null; // ProductUpdateOneRequiredWithoutRequestsInput
+    shop?: NexusGenInputs['ShopUpdateOneRequiredWithoutRequestsInput'] | null; // ShopUpdateOneRequiredWithoutRequestsInput
   }
-  ShipmentUpdateManyMutationInput: { // input type
-    count?: NexusGenInputs['FloatFieldUpdateOperationsInput'] | null; // FloatFieldUpdateOperationsInput
-    createdAt?: NexusGenInputs['DateTimeFieldUpdateOperationsInput'] | null; // DateTimeFieldUpdateOperationsInput
+  RequestUpdateManyMutationInput: { // input type
+    amount?: NexusGenInputs['FloatFieldUpdateOperationsInput'] | null; // FloatFieldUpdateOperationsInput
+    approved?: NexusGenInputs['BoolFieldUpdateOperationsInput'] | null; // BoolFieldUpdateOperationsInput
     id?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
   }
-  ShipmentUpdateManyWithWhereWithoutProductInput: { // input type
-    data: NexusGenInputs['ShipmentUpdateManyMutationInput']; // ShipmentUpdateManyMutationInput!
-    where: NexusGenInputs['ShipmentScalarWhereInput']; // ShipmentScalarWhereInput!
+  RequestUpdateManyWithWhereWithoutProductInput: { // input type
+    data: NexusGenInputs['RequestUpdateManyMutationInput']; // RequestUpdateManyMutationInput!
+    where: NexusGenInputs['RequestScalarWhereInput']; // RequestScalarWhereInput!
   }
-  ShipmentUpdateManyWithWhereWithoutShopInput: { // input type
-    data: NexusGenInputs['ShipmentUpdateManyMutationInput']; // ShipmentUpdateManyMutationInput!
-    where: NexusGenInputs['ShipmentScalarWhereInput']; // ShipmentScalarWhereInput!
+  RequestUpdateManyWithWhereWithoutShopInput: { // input type
+    data: NexusGenInputs['RequestUpdateManyMutationInput']; // RequestUpdateManyMutationInput!
+    where: NexusGenInputs['RequestScalarWhereInput']; // RequestScalarWhereInput!
   }
-  ShipmentUpdateManyWithoutProductInput: { // input type
-    connect?: NexusGenInputs['ShipmentWhereUniqueInput'][] | null; // [ShipmentWhereUniqueInput!]
-    connectOrCreate?: NexusGenInputs['ShipmentCreateOrConnectWithoutProductInput'][] | null; // [ShipmentCreateOrConnectWithoutProductInput!]
-    create?: NexusGenInputs['ShipmentCreateWithoutProductInput'][] | null; // [ShipmentCreateWithoutProductInput!]
-    createMany?: NexusGenInputs['ShipmentCreateManyProductInputEnvelope'] | null; // ShipmentCreateManyProductInputEnvelope
-    delete?: NexusGenInputs['ShipmentWhereUniqueInput'][] | null; // [ShipmentWhereUniqueInput!]
-    deleteMany?: NexusGenInputs['ShipmentScalarWhereInput'][] | null; // [ShipmentScalarWhereInput!]
-    disconnect?: NexusGenInputs['ShipmentWhereUniqueInput'][] | null; // [ShipmentWhereUniqueInput!]
-    set?: NexusGenInputs['ShipmentWhereUniqueInput'][] | null; // [ShipmentWhereUniqueInput!]
-    update?: NexusGenInputs['ShipmentUpdateWithWhereUniqueWithoutProductInput'][] | null; // [ShipmentUpdateWithWhereUniqueWithoutProductInput!]
-    updateMany?: NexusGenInputs['ShipmentUpdateManyWithWhereWithoutProductInput'][] | null; // [ShipmentUpdateManyWithWhereWithoutProductInput!]
-    upsert?: NexusGenInputs['ShipmentUpsertWithWhereUniqueWithoutProductInput'][] | null; // [ShipmentUpsertWithWhereUniqueWithoutProductInput!]
+  RequestUpdateManyWithoutProductInput: { // input type
+    connect?: NexusGenInputs['RequestWhereUniqueInput'][] | null; // [RequestWhereUniqueInput!]
+    connectOrCreate?: NexusGenInputs['RequestCreateOrConnectWithoutProductInput'][] | null; // [RequestCreateOrConnectWithoutProductInput!]
+    create?: NexusGenInputs['RequestCreateWithoutProductInput'][] | null; // [RequestCreateWithoutProductInput!]
+    createMany?: NexusGenInputs['RequestCreateManyProductInputEnvelope'] | null; // RequestCreateManyProductInputEnvelope
+    delete?: NexusGenInputs['RequestWhereUniqueInput'][] | null; // [RequestWhereUniqueInput!]
+    deleteMany?: NexusGenInputs['RequestScalarWhereInput'][] | null; // [RequestScalarWhereInput!]
+    disconnect?: NexusGenInputs['RequestWhereUniqueInput'][] | null; // [RequestWhereUniqueInput!]
+    set?: NexusGenInputs['RequestWhereUniqueInput'][] | null; // [RequestWhereUniqueInput!]
+    update?: NexusGenInputs['RequestUpdateWithWhereUniqueWithoutProductInput'][] | null; // [RequestUpdateWithWhereUniqueWithoutProductInput!]
+    updateMany?: NexusGenInputs['RequestUpdateManyWithWhereWithoutProductInput'][] | null; // [RequestUpdateManyWithWhereWithoutProductInput!]
+    upsert?: NexusGenInputs['RequestUpsertWithWhereUniqueWithoutProductInput'][] | null; // [RequestUpsertWithWhereUniqueWithoutProductInput!]
   }
-  ShipmentUpdateManyWithoutShopInput: { // input type
-    connect?: NexusGenInputs['ShipmentWhereUniqueInput'][] | null; // [ShipmentWhereUniqueInput!]
-    connectOrCreate?: NexusGenInputs['ShipmentCreateOrConnectWithoutShopInput'][] | null; // [ShipmentCreateOrConnectWithoutShopInput!]
-    create?: NexusGenInputs['ShipmentCreateWithoutShopInput'][] | null; // [ShipmentCreateWithoutShopInput!]
-    createMany?: NexusGenInputs['ShipmentCreateManyShopInputEnvelope'] | null; // ShipmentCreateManyShopInputEnvelope
-    delete?: NexusGenInputs['ShipmentWhereUniqueInput'][] | null; // [ShipmentWhereUniqueInput!]
-    deleteMany?: NexusGenInputs['ShipmentScalarWhereInput'][] | null; // [ShipmentScalarWhereInput!]
-    disconnect?: NexusGenInputs['ShipmentWhereUniqueInput'][] | null; // [ShipmentWhereUniqueInput!]
-    set?: NexusGenInputs['ShipmentWhereUniqueInput'][] | null; // [ShipmentWhereUniqueInput!]
-    update?: NexusGenInputs['ShipmentUpdateWithWhereUniqueWithoutShopInput'][] | null; // [ShipmentUpdateWithWhereUniqueWithoutShopInput!]
-    updateMany?: NexusGenInputs['ShipmentUpdateManyWithWhereWithoutShopInput'][] | null; // [ShipmentUpdateManyWithWhereWithoutShopInput!]
-    upsert?: NexusGenInputs['ShipmentUpsertWithWhereUniqueWithoutShopInput'][] | null; // [ShipmentUpsertWithWhereUniqueWithoutShopInput!]
+  RequestUpdateManyWithoutShopInput: { // input type
+    connect?: NexusGenInputs['RequestWhereUniqueInput'][] | null; // [RequestWhereUniqueInput!]
+    connectOrCreate?: NexusGenInputs['RequestCreateOrConnectWithoutShopInput'][] | null; // [RequestCreateOrConnectWithoutShopInput!]
+    create?: NexusGenInputs['RequestCreateWithoutShopInput'][] | null; // [RequestCreateWithoutShopInput!]
+    createMany?: NexusGenInputs['RequestCreateManyShopInputEnvelope'] | null; // RequestCreateManyShopInputEnvelope
+    delete?: NexusGenInputs['RequestWhereUniqueInput'][] | null; // [RequestWhereUniqueInput!]
+    deleteMany?: NexusGenInputs['RequestScalarWhereInput'][] | null; // [RequestScalarWhereInput!]
+    disconnect?: NexusGenInputs['RequestWhereUniqueInput'][] | null; // [RequestWhereUniqueInput!]
+    set?: NexusGenInputs['RequestWhereUniqueInput'][] | null; // [RequestWhereUniqueInput!]
+    update?: NexusGenInputs['RequestUpdateWithWhereUniqueWithoutShopInput'][] | null; // [RequestUpdateWithWhereUniqueWithoutShopInput!]
+    updateMany?: NexusGenInputs['RequestUpdateManyWithWhereWithoutShopInput'][] | null; // [RequestUpdateManyWithWhereWithoutShopInput!]
+    upsert?: NexusGenInputs['RequestUpsertWithWhereUniqueWithoutShopInput'][] | null; // [RequestUpsertWithWhereUniqueWithoutShopInput!]
   }
-  ShipmentUpdateWithWhereUniqueWithoutProductInput: { // input type
-    data: NexusGenInputs['ShipmentUpdateWithoutProductInput']; // ShipmentUpdateWithoutProductInput!
-    where: NexusGenInputs['ShipmentWhereUniqueInput']; // ShipmentWhereUniqueInput!
+  RequestUpdateWithWhereUniqueWithoutProductInput: { // input type
+    data: NexusGenInputs['RequestUpdateWithoutProductInput']; // RequestUpdateWithoutProductInput!
+    where: NexusGenInputs['RequestWhereUniqueInput']; // RequestWhereUniqueInput!
   }
-  ShipmentUpdateWithWhereUniqueWithoutShopInput: { // input type
-    data: NexusGenInputs['ShipmentUpdateWithoutShopInput']; // ShipmentUpdateWithoutShopInput!
-    where: NexusGenInputs['ShipmentWhereUniqueInput']; // ShipmentWhereUniqueInput!
+  RequestUpdateWithWhereUniqueWithoutShopInput: { // input type
+    data: NexusGenInputs['RequestUpdateWithoutShopInput']; // RequestUpdateWithoutShopInput!
+    where: NexusGenInputs['RequestWhereUniqueInput']; // RequestWhereUniqueInput!
   }
-  ShipmentUpdateWithoutProductInput: { // input type
-    count?: NexusGenInputs['FloatFieldUpdateOperationsInput'] | null; // FloatFieldUpdateOperationsInput
-    createdAt?: NexusGenInputs['DateTimeFieldUpdateOperationsInput'] | null; // DateTimeFieldUpdateOperationsInput
+  RequestUpdateWithoutProductInput: { // input type
+    amount?: NexusGenInputs['FloatFieldUpdateOperationsInput'] | null; // FloatFieldUpdateOperationsInput
+    approved?: NexusGenInputs['BoolFieldUpdateOperationsInput'] | null; // BoolFieldUpdateOperationsInput
     id?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
-    shop?: NexusGenInputs['ShopUpdateOneRequiredWithoutShipmentsInput'] | null; // ShopUpdateOneRequiredWithoutShipmentsInput
+    shop?: NexusGenInputs['ShopUpdateOneRequiredWithoutRequestsInput'] | null; // ShopUpdateOneRequiredWithoutRequestsInput
   }
-  ShipmentUpdateWithoutShopInput: { // input type
-    count?: NexusGenInputs['FloatFieldUpdateOperationsInput'] | null; // FloatFieldUpdateOperationsInput
-    createdAt?: NexusGenInputs['DateTimeFieldUpdateOperationsInput'] | null; // DateTimeFieldUpdateOperationsInput
+  RequestUpdateWithoutShopInput: { // input type
+    amount?: NexusGenInputs['FloatFieldUpdateOperationsInput'] | null; // FloatFieldUpdateOperationsInput
+    approved?: NexusGenInputs['BoolFieldUpdateOperationsInput'] | null; // BoolFieldUpdateOperationsInput
     id?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
-    product?: NexusGenInputs['ProductUpdateOneRequiredWithoutShipmentsInput'] | null; // ProductUpdateOneRequiredWithoutShipmentsInput
+    product?: NexusGenInputs['ProductUpdateOneRequiredWithoutRequestsInput'] | null; // ProductUpdateOneRequiredWithoutRequestsInput
   }
-  ShipmentUpsertWithWhereUniqueWithoutProductInput: { // input type
-    create: NexusGenInputs['ShipmentCreateWithoutProductInput']; // ShipmentCreateWithoutProductInput!
-    update: NexusGenInputs['ShipmentUpdateWithoutProductInput']; // ShipmentUpdateWithoutProductInput!
-    where: NexusGenInputs['ShipmentWhereUniqueInput']; // ShipmentWhereUniqueInput!
+  RequestUpsertWithWhereUniqueWithoutProductInput: { // input type
+    create: NexusGenInputs['RequestCreateWithoutProductInput']; // RequestCreateWithoutProductInput!
+    update: NexusGenInputs['RequestUpdateWithoutProductInput']; // RequestUpdateWithoutProductInput!
+    where: NexusGenInputs['RequestWhereUniqueInput']; // RequestWhereUniqueInput!
   }
-  ShipmentUpsertWithWhereUniqueWithoutShopInput: { // input type
-    create: NexusGenInputs['ShipmentCreateWithoutShopInput']; // ShipmentCreateWithoutShopInput!
-    update: NexusGenInputs['ShipmentUpdateWithoutShopInput']; // ShipmentUpdateWithoutShopInput!
-    where: NexusGenInputs['ShipmentWhereUniqueInput']; // ShipmentWhereUniqueInput!
+  RequestUpsertWithWhereUniqueWithoutShopInput: { // input type
+    create: NexusGenInputs['RequestCreateWithoutShopInput']; // RequestCreateWithoutShopInput!
+    update: NexusGenInputs['RequestUpdateWithoutShopInput']; // RequestUpdateWithoutShopInput!
+    where: NexusGenInputs['RequestWhereUniqueInput']; // RequestWhereUniqueInput!
   }
-  ShipmentWhereUniqueInput: { // input type
+  RequestWhereUniqueInput: { // input type
     id?: string | null; // String
+  }
+  ShipGoodsToStockArgs: { // input type
+    expirationDate: string; // String!
+    manufacturerId: string; // String!
+    productAmount: number; // Float!
+    productName: string; // String!
+    productUnit: string; // String!
   }
   ShopCreateInput: { // input type
     id?: string | null; // String
     name: string; // String!
-    owner: NexusGenInputs['UserCreateNestedOneWithoutShopsInput']; // UserCreateNestedOneWithoutShopsInput!
-    products?: NexusGenInputs['ProductCreateNestedManyWithoutShopsInput'] | null; // ProductCreateNestedManyWithoutShopsInput
-    shipments?: NexusGenInputs['ShipmentCreateNestedManyWithoutShopInput'] | null; // ShipmentCreateNestedManyWithoutShopInput
+    requests?: NexusGenInputs['RequestCreateNestedManyWithoutShopInput'] | null; // RequestCreateNestedManyWithoutShopInput
+    shopOwner: NexusGenInputs['UserCreateNestedOneWithoutShopsInput']; // UserCreateNestedOneWithoutShopsInput!
+    transactions?: NexusGenInputs['TransactionCreateNestedManyWithoutShopInput'] | null; // TransactionCreateNestedManyWithoutShopInput
   }
-  ShopCreateManyOwnerInput: { // input type
+  ShopCreateManyShopOwnerInput: { // input type
     id?: string | null; // String
     name: string; // String!
   }
-  ShopCreateManyOwnerInputEnvelope: { // input type
-    data?: NexusGenInputs['ShopCreateManyOwnerInput'][] | null; // [ShopCreateManyOwnerInput!]
+  ShopCreateManyShopOwnerInputEnvelope: { // input type
+    data?: NexusGenInputs['ShopCreateManyShopOwnerInput'][] | null; // [ShopCreateManyShopOwnerInput!]
     skipDuplicates?: boolean | null; // Boolean
   }
-  ShopCreateNestedManyWithoutOwnerInput: { // input type
+  ShopCreateNestedManyWithoutShopOwnerInput: { // input type
     connect?: NexusGenInputs['ShopWhereUniqueInput'][] | null; // [ShopWhereUniqueInput!]
-    connectOrCreate?: NexusGenInputs['ShopCreateOrConnectWithoutOwnerInput'][] | null; // [ShopCreateOrConnectWithoutOwnerInput!]
-    create?: NexusGenInputs['ShopCreateWithoutOwnerInput'][] | null; // [ShopCreateWithoutOwnerInput!]
-    createMany?: NexusGenInputs['ShopCreateManyOwnerInputEnvelope'] | null; // ShopCreateManyOwnerInputEnvelope
+    connectOrCreate?: NexusGenInputs['ShopCreateOrConnectWithoutShopOwnerInput'][] | null; // [ShopCreateOrConnectWithoutShopOwnerInput!]
+    create?: NexusGenInputs['ShopCreateWithoutShopOwnerInput'][] | null; // [ShopCreateWithoutShopOwnerInput!]
+    createMany?: NexusGenInputs['ShopCreateManyShopOwnerInputEnvelope'] | null; // ShopCreateManyShopOwnerInputEnvelope
   }
-  ShopCreateNestedManyWithoutProductsInput: { // input type
-    connect?: NexusGenInputs['ShopWhereUniqueInput'][] | null; // [ShopWhereUniqueInput!]
-    connectOrCreate?: NexusGenInputs['ShopCreateOrConnectWithoutProductsInput'][] | null; // [ShopCreateOrConnectWithoutProductsInput!]
-    create?: NexusGenInputs['ShopCreateWithoutProductsInput'][] | null; // [ShopCreateWithoutProductsInput!]
-  }
-  ShopCreateNestedOneWithoutShipmentsInput: { // input type
+  ShopCreateNestedOneWithoutRequestsInput: { // input type
     connect?: NexusGenInputs['ShopWhereUniqueInput'] | null; // ShopWhereUniqueInput
-    connectOrCreate?: NexusGenInputs['ShopCreateOrConnectWithoutShipmentsInput'] | null; // ShopCreateOrConnectWithoutShipmentsInput
-    create?: NexusGenInputs['ShopCreateWithoutShipmentsInput'] | null; // ShopCreateWithoutShipmentsInput
+    connectOrCreate?: NexusGenInputs['ShopCreateOrConnectWithoutRequestsInput'] | null; // ShopCreateOrConnectWithoutRequestsInput
+    create?: NexusGenInputs['ShopCreateWithoutRequestsInput'] | null; // ShopCreateWithoutRequestsInput
   }
-  ShopCreateOrConnectWithoutOwnerInput: { // input type
-    create: NexusGenInputs['ShopCreateWithoutOwnerInput']; // ShopCreateWithoutOwnerInput!
+  ShopCreateNestedOneWithoutTransactionsInput: { // input type
+    connect?: NexusGenInputs['ShopWhereUniqueInput'] | null; // ShopWhereUniqueInput
+    connectOrCreate?: NexusGenInputs['ShopCreateOrConnectWithoutTransactionsInput'] | null; // ShopCreateOrConnectWithoutTransactionsInput
+    create?: NexusGenInputs['ShopCreateWithoutTransactionsInput'] | null; // ShopCreateWithoutTransactionsInput
+  }
+  ShopCreateOrConnectWithoutRequestsInput: { // input type
+    create: NexusGenInputs['ShopCreateWithoutRequestsInput']; // ShopCreateWithoutRequestsInput!
     where: NexusGenInputs['ShopWhereUniqueInput']; // ShopWhereUniqueInput!
   }
-  ShopCreateOrConnectWithoutProductsInput: { // input type
-    create: NexusGenInputs['ShopCreateWithoutProductsInput']; // ShopCreateWithoutProductsInput!
+  ShopCreateOrConnectWithoutShopOwnerInput: { // input type
+    create: NexusGenInputs['ShopCreateWithoutShopOwnerInput']; // ShopCreateWithoutShopOwnerInput!
     where: NexusGenInputs['ShopWhereUniqueInput']; // ShopWhereUniqueInput!
   }
-  ShopCreateOrConnectWithoutShipmentsInput: { // input type
-    create: NexusGenInputs['ShopCreateWithoutShipmentsInput']; // ShopCreateWithoutShipmentsInput!
+  ShopCreateOrConnectWithoutTransactionsInput: { // input type
+    create: NexusGenInputs['ShopCreateWithoutTransactionsInput']; // ShopCreateWithoutTransactionsInput!
     where: NexusGenInputs['ShopWhereUniqueInput']; // ShopWhereUniqueInput!
   }
-  ShopCreateWithoutOwnerInput: { // input type
+  ShopCreateWithoutRequestsInput: { // input type
     id?: string | null; // String
     name: string; // String!
-    products?: NexusGenInputs['ProductCreateNestedManyWithoutShopsInput'] | null; // ProductCreateNestedManyWithoutShopsInput
-    shipments?: NexusGenInputs['ShipmentCreateNestedManyWithoutShopInput'] | null; // ShipmentCreateNestedManyWithoutShopInput
+    shopOwner: NexusGenInputs['UserCreateNestedOneWithoutShopsInput']; // UserCreateNestedOneWithoutShopsInput!
+    transactions?: NexusGenInputs['TransactionCreateNestedManyWithoutShopInput'] | null; // TransactionCreateNestedManyWithoutShopInput
   }
-  ShopCreateWithoutProductsInput: { // input type
+  ShopCreateWithoutShopOwnerInput: { // input type
     id?: string | null; // String
     name: string; // String!
-    owner: NexusGenInputs['UserCreateNestedOneWithoutShopsInput']; // UserCreateNestedOneWithoutShopsInput!
-    shipments?: NexusGenInputs['ShipmentCreateNestedManyWithoutShopInput'] | null; // ShipmentCreateNestedManyWithoutShopInput
+    requests?: NexusGenInputs['RequestCreateNestedManyWithoutShopInput'] | null; // RequestCreateNestedManyWithoutShopInput
+    transactions?: NexusGenInputs['TransactionCreateNestedManyWithoutShopInput'] | null; // TransactionCreateNestedManyWithoutShopInput
   }
-  ShopCreateWithoutShipmentsInput: { // input type
+  ShopCreateWithoutTransactionsInput: { // input type
     id?: string | null; // String
     name: string; // String!
-    owner: NexusGenInputs['UserCreateNestedOneWithoutShopsInput']; // UserCreateNestedOneWithoutShopsInput!
-    products?: NexusGenInputs['ProductCreateNestedManyWithoutShopsInput'] | null; // ProductCreateNestedManyWithoutShopsInput
+    requests?: NexusGenInputs['RequestCreateNestedManyWithoutShopInput'] | null; // RequestCreateNestedManyWithoutShopInput
+    shopOwner: NexusGenInputs['UserCreateNestedOneWithoutShopsInput']; // UserCreateNestedOneWithoutShopsInput!
   }
   ShopScalarWhereInput: { // input type
     AND?: NexusGenInputs['ShopScalarWhereInput'][] | null; // [ShopScalarWhereInput!]
@@ -630,102 +704,89 @@ export interface NexusGenInputs {
     OR?: NexusGenInputs['ShopScalarWhereInput'][] | null; // [ShopScalarWhereInput!]
     id?: NexusGenInputs['StringFilter'] | null; // StringFilter
     name?: NexusGenInputs['StringFilter'] | null; // StringFilter
-    ownerId?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    shopOwnerId?: NexusGenInputs['StringFilter'] | null; // StringFilter
   }
   ShopUpdateInput: { // input type
     id?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
     name?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
-    owner?: NexusGenInputs['UserUpdateOneRequiredWithoutShopsInput'] | null; // UserUpdateOneRequiredWithoutShopsInput
-    products?: NexusGenInputs['ProductUpdateManyWithoutShopsInput'] | null; // ProductUpdateManyWithoutShopsInput
-    shipments?: NexusGenInputs['ShipmentUpdateManyWithoutShopInput'] | null; // ShipmentUpdateManyWithoutShopInput
+    requests?: NexusGenInputs['RequestUpdateManyWithoutShopInput'] | null; // RequestUpdateManyWithoutShopInput
+    shopOwner?: NexusGenInputs['UserUpdateOneRequiredWithoutShopsInput'] | null; // UserUpdateOneRequiredWithoutShopsInput
+    transactions?: NexusGenInputs['TransactionUpdateManyWithoutShopInput'] | null; // TransactionUpdateManyWithoutShopInput
   }
   ShopUpdateManyMutationInput: { // input type
     id?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
     name?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
   }
-  ShopUpdateManyWithWhereWithoutOwnerInput: { // input type
+  ShopUpdateManyWithWhereWithoutShopOwnerInput: { // input type
     data: NexusGenInputs['ShopUpdateManyMutationInput']; // ShopUpdateManyMutationInput!
     where: NexusGenInputs['ShopScalarWhereInput']; // ShopScalarWhereInput!
   }
-  ShopUpdateManyWithWhereWithoutProductsInput: { // input type
-    data: NexusGenInputs['ShopUpdateManyMutationInput']; // ShopUpdateManyMutationInput!
-    where: NexusGenInputs['ShopScalarWhereInput']; // ShopScalarWhereInput!
-  }
-  ShopUpdateManyWithoutOwnerInput: { // input type
+  ShopUpdateManyWithoutShopOwnerInput: { // input type
     connect?: NexusGenInputs['ShopWhereUniqueInput'][] | null; // [ShopWhereUniqueInput!]
-    connectOrCreate?: NexusGenInputs['ShopCreateOrConnectWithoutOwnerInput'][] | null; // [ShopCreateOrConnectWithoutOwnerInput!]
-    create?: NexusGenInputs['ShopCreateWithoutOwnerInput'][] | null; // [ShopCreateWithoutOwnerInput!]
-    createMany?: NexusGenInputs['ShopCreateManyOwnerInputEnvelope'] | null; // ShopCreateManyOwnerInputEnvelope
+    connectOrCreate?: NexusGenInputs['ShopCreateOrConnectWithoutShopOwnerInput'][] | null; // [ShopCreateOrConnectWithoutShopOwnerInput!]
+    create?: NexusGenInputs['ShopCreateWithoutShopOwnerInput'][] | null; // [ShopCreateWithoutShopOwnerInput!]
+    createMany?: NexusGenInputs['ShopCreateManyShopOwnerInputEnvelope'] | null; // ShopCreateManyShopOwnerInputEnvelope
     delete?: NexusGenInputs['ShopWhereUniqueInput'][] | null; // [ShopWhereUniqueInput!]
     deleteMany?: NexusGenInputs['ShopScalarWhereInput'][] | null; // [ShopScalarWhereInput!]
     disconnect?: NexusGenInputs['ShopWhereUniqueInput'][] | null; // [ShopWhereUniqueInput!]
     set?: NexusGenInputs['ShopWhereUniqueInput'][] | null; // [ShopWhereUniqueInput!]
-    update?: NexusGenInputs['ShopUpdateWithWhereUniqueWithoutOwnerInput'][] | null; // [ShopUpdateWithWhereUniqueWithoutOwnerInput!]
-    updateMany?: NexusGenInputs['ShopUpdateManyWithWhereWithoutOwnerInput'][] | null; // [ShopUpdateManyWithWhereWithoutOwnerInput!]
-    upsert?: NexusGenInputs['ShopUpsertWithWhereUniqueWithoutOwnerInput'][] | null; // [ShopUpsertWithWhereUniqueWithoutOwnerInput!]
+    update?: NexusGenInputs['ShopUpdateWithWhereUniqueWithoutShopOwnerInput'][] | null; // [ShopUpdateWithWhereUniqueWithoutShopOwnerInput!]
+    updateMany?: NexusGenInputs['ShopUpdateManyWithWhereWithoutShopOwnerInput'][] | null; // [ShopUpdateManyWithWhereWithoutShopOwnerInput!]
+    upsert?: NexusGenInputs['ShopUpsertWithWhereUniqueWithoutShopOwnerInput'][] | null; // [ShopUpsertWithWhereUniqueWithoutShopOwnerInput!]
   }
-  ShopUpdateManyWithoutProductsInput: { // input type
-    connect?: NexusGenInputs['ShopWhereUniqueInput'][] | null; // [ShopWhereUniqueInput!]
-    connectOrCreate?: NexusGenInputs['ShopCreateOrConnectWithoutProductsInput'][] | null; // [ShopCreateOrConnectWithoutProductsInput!]
-    create?: NexusGenInputs['ShopCreateWithoutProductsInput'][] | null; // [ShopCreateWithoutProductsInput!]
-    delete?: NexusGenInputs['ShopWhereUniqueInput'][] | null; // [ShopWhereUniqueInput!]
-    deleteMany?: NexusGenInputs['ShopScalarWhereInput'][] | null; // [ShopScalarWhereInput!]
-    disconnect?: NexusGenInputs['ShopWhereUniqueInput'][] | null; // [ShopWhereUniqueInput!]
-    set?: NexusGenInputs['ShopWhereUniqueInput'][] | null; // [ShopWhereUniqueInput!]
-    update?: NexusGenInputs['ShopUpdateWithWhereUniqueWithoutProductsInput'][] | null; // [ShopUpdateWithWhereUniqueWithoutProductsInput!]
-    updateMany?: NexusGenInputs['ShopUpdateManyWithWhereWithoutProductsInput'][] | null; // [ShopUpdateManyWithWhereWithoutProductsInput!]
-    upsert?: NexusGenInputs['ShopUpsertWithWhereUniqueWithoutProductsInput'][] | null; // [ShopUpsertWithWhereUniqueWithoutProductsInput!]
-  }
-  ShopUpdateOneRequiredWithoutShipmentsInput: { // input type
+  ShopUpdateOneRequiredWithoutRequestsInput: { // input type
     connect?: NexusGenInputs['ShopWhereUniqueInput'] | null; // ShopWhereUniqueInput
-    connectOrCreate?: NexusGenInputs['ShopCreateOrConnectWithoutShipmentsInput'] | null; // ShopCreateOrConnectWithoutShipmentsInput
-    create?: NexusGenInputs['ShopCreateWithoutShipmentsInput'] | null; // ShopCreateWithoutShipmentsInput
-    update?: NexusGenInputs['ShopUpdateWithoutShipmentsInput'] | null; // ShopUpdateWithoutShipmentsInput
-    upsert?: NexusGenInputs['ShopUpsertWithoutShipmentsInput'] | null; // ShopUpsertWithoutShipmentsInput
+    connectOrCreate?: NexusGenInputs['ShopCreateOrConnectWithoutRequestsInput'] | null; // ShopCreateOrConnectWithoutRequestsInput
+    create?: NexusGenInputs['ShopCreateWithoutRequestsInput'] | null; // ShopCreateWithoutRequestsInput
+    update?: NexusGenInputs['ShopUpdateWithoutRequestsInput'] | null; // ShopUpdateWithoutRequestsInput
+    upsert?: NexusGenInputs['ShopUpsertWithoutRequestsInput'] | null; // ShopUpsertWithoutRequestsInput
   }
-  ShopUpdateWithWhereUniqueWithoutOwnerInput: { // input type
-    data: NexusGenInputs['ShopUpdateWithoutOwnerInput']; // ShopUpdateWithoutOwnerInput!
+  ShopUpdateOneWithoutTransactionsInput: { // input type
+    connect?: NexusGenInputs['ShopWhereUniqueInput'] | null; // ShopWhereUniqueInput
+    connectOrCreate?: NexusGenInputs['ShopCreateOrConnectWithoutTransactionsInput'] | null; // ShopCreateOrConnectWithoutTransactionsInput
+    create?: NexusGenInputs['ShopCreateWithoutTransactionsInput'] | null; // ShopCreateWithoutTransactionsInput
+    delete?: boolean | null; // Boolean
+    disconnect?: boolean | null; // Boolean
+    update?: NexusGenInputs['ShopUpdateWithoutTransactionsInput'] | null; // ShopUpdateWithoutTransactionsInput
+    upsert?: NexusGenInputs['ShopUpsertWithoutTransactionsInput'] | null; // ShopUpsertWithoutTransactionsInput
+  }
+  ShopUpdateWithWhereUniqueWithoutShopOwnerInput: { // input type
+    data: NexusGenInputs['ShopUpdateWithoutShopOwnerInput']; // ShopUpdateWithoutShopOwnerInput!
     where: NexusGenInputs['ShopWhereUniqueInput']; // ShopWhereUniqueInput!
   }
-  ShopUpdateWithWhereUniqueWithoutProductsInput: { // input type
-    data: NexusGenInputs['ShopUpdateWithoutProductsInput']; // ShopUpdateWithoutProductsInput!
-    where: NexusGenInputs['ShopWhereUniqueInput']; // ShopWhereUniqueInput!
-  }
-  ShopUpdateWithoutOwnerInput: { // input type
+  ShopUpdateWithoutRequestsInput: { // input type
     id?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
     name?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
-    products?: NexusGenInputs['ProductUpdateManyWithoutShopsInput'] | null; // ProductUpdateManyWithoutShopsInput
-    shipments?: NexusGenInputs['ShipmentUpdateManyWithoutShopInput'] | null; // ShipmentUpdateManyWithoutShopInput
+    shopOwner?: NexusGenInputs['UserUpdateOneRequiredWithoutShopsInput'] | null; // UserUpdateOneRequiredWithoutShopsInput
+    transactions?: NexusGenInputs['TransactionUpdateManyWithoutShopInput'] | null; // TransactionUpdateManyWithoutShopInput
   }
-  ShopUpdateWithoutProductsInput: { // input type
+  ShopUpdateWithoutShopOwnerInput: { // input type
     id?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
     name?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
-    owner?: NexusGenInputs['UserUpdateOneRequiredWithoutShopsInput'] | null; // UserUpdateOneRequiredWithoutShopsInput
-    shipments?: NexusGenInputs['ShipmentUpdateManyWithoutShopInput'] | null; // ShipmentUpdateManyWithoutShopInput
+    requests?: NexusGenInputs['RequestUpdateManyWithoutShopInput'] | null; // RequestUpdateManyWithoutShopInput
+    transactions?: NexusGenInputs['TransactionUpdateManyWithoutShopInput'] | null; // TransactionUpdateManyWithoutShopInput
   }
-  ShopUpdateWithoutShipmentsInput: { // input type
+  ShopUpdateWithoutTransactionsInput: { // input type
     id?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
     name?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
-    owner?: NexusGenInputs['UserUpdateOneRequiredWithoutShopsInput'] | null; // UserUpdateOneRequiredWithoutShopsInput
-    products?: NexusGenInputs['ProductUpdateManyWithoutShopsInput'] | null; // ProductUpdateManyWithoutShopsInput
+    requests?: NexusGenInputs['RequestUpdateManyWithoutShopInput'] | null; // RequestUpdateManyWithoutShopInput
+    shopOwner?: NexusGenInputs['UserUpdateOneRequiredWithoutShopsInput'] | null; // UserUpdateOneRequiredWithoutShopsInput
   }
-  ShopUpsertWithWhereUniqueWithoutOwnerInput: { // input type
-    create: NexusGenInputs['ShopCreateWithoutOwnerInput']; // ShopCreateWithoutOwnerInput!
-    update: NexusGenInputs['ShopUpdateWithoutOwnerInput']; // ShopUpdateWithoutOwnerInput!
+  ShopUpsertWithWhereUniqueWithoutShopOwnerInput: { // input type
+    create: NexusGenInputs['ShopCreateWithoutShopOwnerInput']; // ShopCreateWithoutShopOwnerInput!
+    update: NexusGenInputs['ShopUpdateWithoutShopOwnerInput']; // ShopUpdateWithoutShopOwnerInput!
     where: NexusGenInputs['ShopWhereUniqueInput']; // ShopWhereUniqueInput!
   }
-  ShopUpsertWithWhereUniqueWithoutProductsInput: { // input type
-    create: NexusGenInputs['ShopCreateWithoutProductsInput']; // ShopCreateWithoutProductsInput!
-    update: NexusGenInputs['ShopUpdateWithoutProductsInput']; // ShopUpdateWithoutProductsInput!
-    where: NexusGenInputs['ShopWhereUniqueInput']; // ShopWhereUniqueInput!
+  ShopUpsertWithoutRequestsInput: { // input type
+    create: NexusGenInputs['ShopCreateWithoutRequestsInput']; // ShopCreateWithoutRequestsInput!
+    update: NexusGenInputs['ShopUpdateWithoutRequestsInput']; // ShopUpdateWithoutRequestsInput!
   }
-  ShopUpsertWithoutShipmentsInput: { // input type
-    create: NexusGenInputs['ShopCreateWithoutShipmentsInput']; // ShopCreateWithoutShipmentsInput!
-    update: NexusGenInputs['ShopUpdateWithoutShipmentsInput']; // ShopUpdateWithoutShipmentsInput!
+  ShopUpsertWithoutTransactionsInput: { // input type
+    create: NexusGenInputs['ShopCreateWithoutTransactionsInput']; // ShopCreateWithoutTransactionsInput!
+    update: NexusGenInputs['ShopUpdateWithoutTransactionsInput']; // ShopUpdateWithoutTransactionsInput!
   }
   ShopWhereUniqueInput: { // input type
     id?: string | null; // String
-    name?: string | null; // String
   }
   SignInInput: { // input type
     login: string; // String!
@@ -747,6 +808,238 @@ export interface NexusGenInputs {
     not?: NexusGenInputs['NestedStringFilter'] | null; // NestedStringFilter
     notIn?: string[] | null; // [String!]
     startsWith?: string | null; // String
+  }
+  StringNullableFilter: { // input type
+    contains?: string | null; // String
+    endsWith?: string | null; // String
+    equals?: string | null; // String
+    gt?: string | null; // String
+    gte?: string | null; // String
+    in?: string[] | null; // [String!]
+    lt?: string | null; // String
+    lte?: string | null; // String
+    mode?: NexusGenEnums['QueryMode'] | null; // QueryMode
+    not?: NexusGenInputs['NestedStringNullableFilter'] | null; // NestedStringNullableFilter
+    notIn?: string[] | null; // [String!]
+    startsWith?: string | null; // String
+  }
+  TransactionCreateInput: { // input type
+    amount: number; // Float!
+    createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
+    id?: string | null; // String
+    manufacturer?: NexusGenInputs['ManufacturerCreateNestedOneWithoutTransactionsInput'] | null; // ManufacturerCreateNestedOneWithoutTransactionsInput
+    product: NexusGenInputs['ProductCreateNestedOneWithoutTransactionsInput']; // ProductCreateNestedOneWithoutTransactionsInput!
+    shop?: NexusGenInputs['ShopCreateNestedOneWithoutTransactionsInput'] | null; // ShopCreateNestedOneWithoutTransactionsInput
+  }
+  TransactionCreateManyManufacturerInput: { // input type
+    amount: number; // Float!
+    createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
+    id?: string | null; // String
+    productId: string; // String!
+    shopId?: string | null; // String
+  }
+  TransactionCreateManyManufacturerInputEnvelope: { // input type
+    data?: NexusGenInputs['TransactionCreateManyManufacturerInput'][] | null; // [TransactionCreateManyManufacturerInput!]
+    skipDuplicates?: boolean | null; // Boolean
+  }
+  TransactionCreateManyProductInput: { // input type
+    amount: number; // Float!
+    createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
+    id?: string | null; // String
+    manufacturerid?: string | null; // String
+    shopId?: string | null; // String
+  }
+  TransactionCreateManyProductInputEnvelope: { // input type
+    data?: NexusGenInputs['TransactionCreateManyProductInput'][] | null; // [TransactionCreateManyProductInput!]
+    skipDuplicates?: boolean | null; // Boolean
+  }
+  TransactionCreateManyShopInput: { // input type
+    amount: number; // Float!
+    createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
+    id?: string | null; // String
+    manufacturerid?: string | null; // String
+    productId: string; // String!
+  }
+  TransactionCreateManyShopInputEnvelope: { // input type
+    data?: NexusGenInputs['TransactionCreateManyShopInput'][] | null; // [TransactionCreateManyShopInput!]
+    skipDuplicates?: boolean | null; // Boolean
+  }
+  TransactionCreateNestedManyWithoutManufacturerInput: { // input type
+    connect?: NexusGenInputs['TransactionWhereUniqueInput'][] | null; // [TransactionWhereUniqueInput!]
+    connectOrCreate?: NexusGenInputs['TransactionCreateOrConnectWithoutManufacturerInput'][] | null; // [TransactionCreateOrConnectWithoutManufacturerInput!]
+    create?: NexusGenInputs['TransactionCreateWithoutManufacturerInput'][] | null; // [TransactionCreateWithoutManufacturerInput!]
+    createMany?: NexusGenInputs['TransactionCreateManyManufacturerInputEnvelope'] | null; // TransactionCreateManyManufacturerInputEnvelope
+  }
+  TransactionCreateNestedManyWithoutProductInput: { // input type
+    connect?: NexusGenInputs['TransactionWhereUniqueInput'][] | null; // [TransactionWhereUniqueInput!]
+    connectOrCreate?: NexusGenInputs['TransactionCreateOrConnectWithoutProductInput'][] | null; // [TransactionCreateOrConnectWithoutProductInput!]
+    create?: NexusGenInputs['TransactionCreateWithoutProductInput'][] | null; // [TransactionCreateWithoutProductInput!]
+    createMany?: NexusGenInputs['TransactionCreateManyProductInputEnvelope'] | null; // TransactionCreateManyProductInputEnvelope
+  }
+  TransactionCreateNestedManyWithoutShopInput: { // input type
+    connect?: NexusGenInputs['TransactionWhereUniqueInput'][] | null; // [TransactionWhereUniqueInput!]
+    connectOrCreate?: NexusGenInputs['TransactionCreateOrConnectWithoutShopInput'][] | null; // [TransactionCreateOrConnectWithoutShopInput!]
+    create?: NexusGenInputs['TransactionCreateWithoutShopInput'][] | null; // [TransactionCreateWithoutShopInput!]
+    createMany?: NexusGenInputs['TransactionCreateManyShopInputEnvelope'] | null; // TransactionCreateManyShopInputEnvelope
+  }
+  TransactionCreateOrConnectWithoutManufacturerInput: { // input type
+    create: NexusGenInputs['TransactionCreateWithoutManufacturerInput']; // TransactionCreateWithoutManufacturerInput!
+    where: NexusGenInputs['TransactionWhereUniqueInput']; // TransactionWhereUniqueInput!
+  }
+  TransactionCreateOrConnectWithoutProductInput: { // input type
+    create: NexusGenInputs['TransactionCreateWithoutProductInput']; // TransactionCreateWithoutProductInput!
+    where: NexusGenInputs['TransactionWhereUniqueInput']; // TransactionWhereUniqueInput!
+  }
+  TransactionCreateOrConnectWithoutShopInput: { // input type
+    create: NexusGenInputs['TransactionCreateWithoutShopInput']; // TransactionCreateWithoutShopInput!
+    where: NexusGenInputs['TransactionWhereUniqueInput']; // TransactionWhereUniqueInput!
+  }
+  TransactionCreateWithoutManufacturerInput: { // input type
+    amount: number; // Float!
+    createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
+    id?: string | null; // String
+    product: NexusGenInputs['ProductCreateNestedOneWithoutTransactionsInput']; // ProductCreateNestedOneWithoutTransactionsInput!
+    shop?: NexusGenInputs['ShopCreateNestedOneWithoutTransactionsInput'] | null; // ShopCreateNestedOneWithoutTransactionsInput
+  }
+  TransactionCreateWithoutProductInput: { // input type
+    amount: number; // Float!
+    createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
+    id?: string | null; // String
+    manufacturer?: NexusGenInputs['ManufacturerCreateNestedOneWithoutTransactionsInput'] | null; // ManufacturerCreateNestedOneWithoutTransactionsInput
+    shop?: NexusGenInputs['ShopCreateNestedOneWithoutTransactionsInput'] | null; // ShopCreateNestedOneWithoutTransactionsInput
+  }
+  TransactionCreateWithoutShopInput: { // input type
+    amount: number; // Float!
+    createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
+    id?: string | null; // String
+    manufacturer?: NexusGenInputs['ManufacturerCreateNestedOneWithoutTransactionsInput'] | null; // ManufacturerCreateNestedOneWithoutTransactionsInput
+    product: NexusGenInputs['ProductCreateNestedOneWithoutTransactionsInput']; // ProductCreateNestedOneWithoutTransactionsInput!
+  }
+  TransactionScalarWhereInput: { // input type
+    AND?: NexusGenInputs['TransactionScalarWhereInput'][] | null; // [TransactionScalarWhereInput!]
+    NOT?: NexusGenInputs['TransactionScalarWhereInput'][] | null; // [TransactionScalarWhereInput!]
+    OR?: NexusGenInputs['TransactionScalarWhereInput'][] | null; // [TransactionScalarWhereInput!]
+    amount?: NexusGenInputs['FloatFilter'] | null; // FloatFilter
+    createdAt?: NexusGenInputs['DateTimeFilter'] | null; // DateTimeFilter
+    id?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    manufacturerid?: NexusGenInputs['StringNullableFilter'] | null; // StringNullableFilter
+    productId?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    shopId?: NexusGenInputs['StringNullableFilter'] | null; // StringNullableFilter
+  }
+  TransactionUpdateInput: { // input type
+    amount?: NexusGenInputs['FloatFieldUpdateOperationsInput'] | null; // FloatFieldUpdateOperationsInput
+    createdAt?: NexusGenInputs['DateTimeFieldUpdateOperationsInput'] | null; // DateTimeFieldUpdateOperationsInput
+    id?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
+    manufacturer?: NexusGenInputs['ManufacturerUpdateOneWithoutTransactionsInput'] | null; // ManufacturerUpdateOneWithoutTransactionsInput
+    product?: NexusGenInputs['ProductUpdateOneRequiredWithoutTransactionsInput'] | null; // ProductUpdateOneRequiredWithoutTransactionsInput
+    shop?: NexusGenInputs['ShopUpdateOneWithoutTransactionsInput'] | null; // ShopUpdateOneWithoutTransactionsInput
+  }
+  TransactionUpdateManyMutationInput: { // input type
+    amount?: NexusGenInputs['FloatFieldUpdateOperationsInput'] | null; // FloatFieldUpdateOperationsInput
+    createdAt?: NexusGenInputs['DateTimeFieldUpdateOperationsInput'] | null; // DateTimeFieldUpdateOperationsInput
+    id?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
+  }
+  TransactionUpdateManyWithWhereWithoutManufacturerInput: { // input type
+    data: NexusGenInputs['TransactionUpdateManyMutationInput']; // TransactionUpdateManyMutationInput!
+    where: NexusGenInputs['TransactionScalarWhereInput']; // TransactionScalarWhereInput!
+  }
+  TransactionUpdateManyWithWhereWithoutProductInput: { // input type
+    data: NexusGenInputs['TransactionUpdateManyMutationInput']; // TransactionUpdateManyMutationInput!
+    where: NexusGenInputs['TransactionScalarWhereInput']; // TransactionScalarWhereInput!
+  }
+  TransactionUpdateManyWithWhereWithoutShopInput: { // input type
+    data: NexusGenInputs['TransactionUpdateManyMutationInput']; // TransactionUpdateManyMutationInput!
+    where: NexusGenInputs['TransactionScalarWhereInput']; // TransactionScalarWhereInput!
+  }
+  TransactionUpdateManyWithoutManufacturerInput: { // input type
+    connect?: NexusGenInputs['TransactionWhereUniqueInput'][] | null; // [TransactionWhereUniqueInput!]
+    connectOrCreate?: NexusGenInputs['TransactionCreateOrConnectWithoutManufacturerInput'][] | null; // [TransactionCreateOrConnectWithoutManufacturerInput!]
+    create?: NexusGenInputs['TransactionCreateWithoutManufacturerInput'][] | null; // [TransactionCreateWithoutManufacturerInput!]
+    createMany?: NexusGenInputs['TransactionCreateManyManufacturerInputEnvelope'] | null; // TransactionCreateManyManufacturerInputEnvelope
+    delete?: NexusGenInputs['TransactionWhereUniqueInput'][] | null; // [TransactionWhereUniqueInput!]
+    deleteMany?: NexusGenInputs['TransactionScalarWhereInput'][] | null; // [TransactionScalarWhereInput!]
+    disconnect?: NexusGenInputs['TransactionWhereUniqueInput'][] | null; // [TransactionWhereUniqueInput!]
+    set?: NexusGenInputs['TransactionWhereUniqueInput'][] | null; // [TransactionWhereUniqueInput!]
+    update?: NexusGenInputs['TransactionUpdateWithWhereUniqueWithoutManufacturerInput'][] | null; // [TransactionUpdateWithWhereUniqueWithoutManufacturerInput!]
+    updateMany?: NexusGenInputs['TransactionUpdateManyWithWhereWithoutManufacturerInput'][] | null; // [TransactionUpdateManyWithWhereWithoutManufacturerInput!]
+    upsert?: NexusGenInputs['TransactionUpsertWithWhereUniqueWithoutManufacturerInput'][] | null; // [TransactionUpsertWithWhereUniqueWithoutManufacturerInput!]
+  }
+  TransactionUpdateManyWithoutProductInput: { // input type
+    connect?: NexusGenInputs['TransactionWhereUniqueInput'][] | null; // [TransactionWhereUniqueInput!]
+    connectOrCreate?: NexusGenInputs['TransactionCreateOrConnectWithoutProductInput'][] | null; // [TransactionCreateOrConnectWithoutProductInput!]
+    create?: NexusGenInputs['TransactionCreateWithoutProductInput'][] | null; // [TransactionCreateWithoutProductInput!]
+    createMany?: NexusGenInputs['TransactionCreateManyProductInputEnvelope'] | null; // TransactionCreateManyProductInputEnvelope
+    delete?: NexusGenInputs['TransactionWhereUniqueInput'][] | null; // [TransactionWhereUniqueInput!]
+    deleteMany?: NexusGenInputs['TransactionScalarWhereInput'][] | null; // [TransactionScalarWhereInput!]
+    disconnect?: NexusGenInputs['TransactionWhereUniqueInput'][] | null; // [TransactionWhereUniqueInput!]
+    set?: NexusGenInputs['TransactionWhereUniqueInput'][] | null; // [TransactionWhereUniqueInput!]
+    update?: NexusGenInputs['TransactionUpdateWithWhereUniqueWithoutProductInput'][] | null; // [TransactionUpdateWithWhereUniqueWithoutProductInput!]
+    updateMany?: NexusGenInputs['TransactionUpdateManyWithWhereWithoutProductInput'][] | null; // [TransactionUpdateManyWithWhereWithoutProductInput!]
+    upsert?: NexusGenInputs['TransactionUpsertWithWhereUniqueWithoutProductInput'][] | null; // [TransactionUpsertWithWhereUniqueWithoutProductInput!]
+  }
+  TransactionUpdateManyWithoutShopInput: { // input type
+    connect?: NexusGenInputs['TransactionWhereUniqueInput'][] | null; // [TransactionWhereUniqueInput!]
+    connectOrCreate?: NexusGenInputs['TransactionCreateOrConnectWithoutShopInput'][] | null; // [TransactionCreateOrConnectWithoutShopInput!]
+    create?: NexusGenInputs['TransactionCreateWithoutShopInput'][] | null; // [TransactionCreateWithoutShopInput!]
+    createMany?: NexusGenInputs['TransactionCreateManyShopInputEnvelope'] | null; // TransactionCreateManyShopInputEnvelope
+    delete?: NexusGenInputs['TransactionWhereUniqueInput'][] | null; // [TransactionWhereUniqueInput!]
+    deleteMany?: NexusGenInputs['TransactionScalarWhereInput'][] | null; // [TransactionScalarWhereInput!]
+    disconnect?: NexusGenInputs['TransactionWhereUniqueInput'][] | null; // [TransactionWhereUniqueInput!]
+    set?: NexusGenInputs['TransactionWhereUniqueInput'][] | null; // [TransactionWhereUniqueInput!]
+    update?: NexusGenInputs['TransactionUpdateWithWhereUniqueWithoutShopInput'][] | null; // [TransactionUpdateWithWhereUniqueWithoutShopInput!]
+    updateMany?: NexusGenInputs['TransactionUpdateManyWithWhereWithoutShopInput'][] | null; // [TransactionUpdateManyWithWhereWithoutShopInput!]
+    upsert?: NexusGenInputs['TransactionUpsertWithWhereUniqueWithoutShopInput'][] | null; // [TransactionUpsertWithWhereUniqueWithoutShopInput!]
+  }
+  TransactionUpdateWithWhereUniqueWithoutManufacturerInput: { // input type
+    data: NexusGenInputs['TransactionUpdateWithoutManufacturerInput']; // TransactionUpdateWithoutManufacturerInput!
+    where: NexusGenInputs['TransactionWhereUniqueInput']; // TransactionWhereUniqueInput!
+  }
+  TransactionUpdateWithWhereUniqueWithoutProductInput: { // input type
+    data: NexusGenInputs['TransactionUpdateWithoutProductInput']; // TransactionUpdateWithoutProductInput!
+    where: NexusGenInputs['TransactionWhereUniqueInput']; // TransactionWhereUniqueInput!
+  }
+  TransactionUpdateWithWhereUniqueWithoutShopInput: { // input type
+    data: NexusGenInputs['TransactionUpdateWithoutShopInput']; // TransactionUpdateWithoutShopInput!
+    where: NexusGenInputs['TransactionWhereUniqueInput']; // TransactionWhereUniqueInput!
+  }
+  TransactionUpdateWithoutManufacturerInput: { // input type
+    amount?: NexusGenInputs['FloatFieldUpdateOperationsInput'] | null; // FloatFieldUpdateOperationsInput
+    createdAt?: NexusGenInputs['DateTimeFieldUpdateOperationsInput'] | null; // DateTimeFieldUpdateOperationsInput
+    id?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
+    product?: NexusGenInputs['ProductUpdateOneRequiredWithoutTransactionsInput'] | null; // ProductUpdateOneRequiredWithoutTransactionsInput
+    shop?: NexusGenInputs['ShopUpdateOneWithoutTransactionsInput'] | null; // ShopUpdateOneWithoutTransactionsInput
+  }
+  TransactionUpdateWithoutProductInput: { // input type
+    amount?: NexusGenInputs['FloatFieldUpdateOperationsInput'] | null; // FloatFieldUpdateOperationsInput
+    createdAt?: NexusGenInputs['DateTimeFieldUpdateOperationsInput'] | null; // DateTimeFieldUpdateOperationsInput
+    id?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
+    manufacturer?: NexusGenInputs['ManufacturerUpdateOneWithoutTransactionsInput'] | null; // ManufacturerUpdateOneWithoutTransactionsInput
+    shop?: NexusGenInputs['ShopUpdateOneWithoutTransactionsInput'] | null; // ShopUpdateOneWithoutTransactionsInput
+  }
+  TransactionUpdateWithoutShopInput: { // input type
+    amount?: NexusGenInputs['FloatFieldUpdateOperationsInput'] | null; // FloatFieldUpdateOperationsInput
+    createdAt?: NexusGenInputs['DateTimeFieldUpdateOperationsInput'] | null; // DateTimeFieldUpdateOperationsInput
+    id?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
+    manufacturer?: NexusGenInputs['ManufacturerUpdateOneWithoutTransactionsInput'] | null; // ManufacturerUpdateOneWithoutTransactionsInput
+    product?: NexusGenInputs['ProductUpdateOneRequiredWithoutTransactionsInput'] | null; // ProductUpdateOneRequiredWithoutTransactionsInput
+  }
+  TransactionUpsertWithWhereUniqueWithoutManufacturerInput: { // input type
+    create: NexusGenInputs['TransactionCreateWithoutManufacturerInput']; // TransactionCreateWithoutManufacturerInput!
+    update: NexusGenInputs['TransactionUpdateWithoutManufacturerInput']; // TransactionUpdateWithoutManufacturerInput!
+    where: NexusGenInputs['TransactionWhereUniqueInput']; // TransactionWhereUniqueInput!
+  }
+  TransactionUpsertWithWhereUniqueWithoutProductInput: { // input type
+    create: NexusGenInputs['TransactionCreateWithoutProductInput']; // TransactionCreateWithoutProductInput!
+    update: NexusGenInputs['TransactionUpdateWithoutProductInput']; // TransactionUpdateWithoutProductInput!
+    where: NexusGenInputs['TransactionWhereUniqueInput']; // TransactionWhereUniqueInput!
+  }
+  TransactionUpsertWithWhereUniqueWithoutShopInput: { // input type
+    create: NexusGenInputs['TransactionCreateWithoutShopInput']; // TransactionCreateWithoutShopInput!
+    update: NexusGenInputs['TransactionUpdateWithoutShopInput']; // TransactionUpdateWithoutShopInput!
+    where: NexusGenInputs['TransactionWhereUniqueInput']; // TransactionWhereUniqueInput!
+  }
+  TransactionWhereUniqueInput: { // input type
+    id?: string | null; // String
   }
   UserCreateNestedOneWithoutManufacturesInput: { // input type
     connect?: NexusGenInputs['UserWhereUniqueInput'] | null; // UserWhereUniqueInput
@@ -773,8 +1066,8 @@ export interface NexusGenInputs {
     id?: string | null; // String
     lastname: string; // String!
     password: string; // String!
-    role?: NexusGenEnums['Role'] | null; // Role
-    shops?: NexusGenInputs['ShopCreateNestedManyWithoutOwnerInput'] | null; // ShopCreateNestedManyWithoutOwnerInput
+    role?: NexusGenEnums['USER_ROLE'] | null; // USER_ROLE
+    shops?: NexusGenInputs['ShopCreateNestedManyWithoutShopOwnerInput'] | null; // ShopCreateNestedManyWithoutShopOwnerInput
     tokenVersion?: number | null; // Int
   }
   UserCreateWithoutShopsInput: { // input type
@@ -785,7 +1078,7 @@ export interface NexusGenInputs {
     lastname: string; // String!
     manufactures?: NexusGenInputs['ManufacturerCreateNestedManyWithoutOwnerInput'] | null; // ManufacturerCreateNestedManyWithoutOwnerInput
     password: string; // String!
-    role?: NexusGenEnums['Role'] | null; // Role
+    role?: NexusGenEnums['USER_ROLE'] | null; // USER_ROLE
     tokenVersion?: number | null; // Int
   }
   UserUpdateOneRequiredWithoutManufacturesInput: { // input type
@@ -809,8 +1102,8 @@ export interface NexusGenInputs {
     id?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
     lastname?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
     password?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
-    role?: NexusGenInputs['NullableEnumRoleFieldUpdateOperationsInput'] | null; // NullableEnumRoleFieldUpdateOperationsInput
-    shops?: NexusGenInputs['ShopUpdateManyWithoutOwnerInput'] | null; // ShopUpdateManyWithoutOwnerInput
+    role?: NexusGenInputs['EnumUSER_ROLEFieldUpdateOperationsInput'] | null; // EnumUSER_ROLEFieldUpdateOperationsInput
+    shops?: NexusGenInputs['ShopUpdateManyWithoutShopOwnerInput'] | null; // ShopUpdateManyWithoutShopOwnerInput
     tokenVersion?: NexusGenInputs['NullableIntFieldUpdateOperationsInput'] | null; // NullableIntFieldUpdateOperationsInput
   }
   UserUpdateWithoutShopsInput: { // input type
@@ -821,7 +1114,7 @@ export interface NexusGenInputs {
     lastname?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
     manufactures?: NexusGenInputs['ManufacturerUpdateManyWithoutOwnerInput'] | null; // ManufacturerUpdateManyWithoutOwnerInput
     password?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
-    role?: NexusGenInputs['NullableEnumRoleFieldUpdateOperationsInput'] | null; // NullableEnumRoleFieldUpdateOperationsInput
+    role?: NexusGenInputs['EnumUSER_ROLEFieldUpdateOperationsInput'] | null; // EnumUSER_ROLEFieldUpdateOperationsInput
     tokenVersion?: NexusGenInputs['NullableIntFieldUpdateOperationsInput'] | null; // NullableIntFieldUpdateOperationsInput
   }
   UserUpsertWithoutManufacturesInput: { // input type
@@ -840,7 +1133,7 @@ export interface NexusGenInputs {
 
 export interface NexusGenEnums {
   QueryMode: "default" | "insensitive"
-  Role: "ADMINISTRATOR" | "FIRM_OWNER" | "SHOP_OWNER"
+  USER_ROLE: "ADMINISTRATOR" | "FIRM_OWNER" | "MANAGER" | "SHOP_OWNER"
 }
 
 export interface NexusGenScalars {
@@ -863,29 +1156,33 @@ export interface NexusGenObjects {
   }
   Mutation: {};
   Product: { // root type
-    count: number; // Float!
+    amount: number; // Float!
     expirationDate: NexusGenScalars['DateTime']; // DateTime!
     id: string; // String!
+    manufacturerId: string; // String!
     name: string; // String!
-    recieptDate: NexusGenScalars['DateTime']; // DateTime!
+    stockDate: NexusGenScalars['DateTime']; // DateTime!
     unit: string; // String!
   }
   Query: {};
-  Shipment: { // root type
-    count: number; // Float!
-    createdAt: NexusGenScalars['DateTime']; // DateTime!
+  Request: { // root type
+    amount: number; // Float!
     id: string; // String!
   }
   Shop: { // root type
     id: string; // String!
     name: string; // String!
   }
+  Transaction: { // root type
+    amount: number; // Float!
+    id: string; // String!
+  }
   User: { // root type
     email: string; // String!
     firstname: string; // String!
     id: string; // String!
     lastname: string; // String!
-    role?: NexusGenEnums['Role'] | null; // Role
+    role: NexusGenEnums['USER_ROLE']; // USER_ROLE!
   }
 }
 
@@ -908,48 +1205,56 @@ export interface NexusGenFieldTypes {
     id: string; // String!
     name: string; // String!
     owner: NexusGenRootTypes['User']; // User!
-    products: NexusGenRootTypes['Product'][]; // [Product!]!
+    transactions: NexusGenRootTypes['Transaction'][]; // [Transaction!]!
   }
   Mutation: { // field return type
+    approveRequest: string | null; // String
+    approveShipment: string | null; // String
     createOneManufacturer: NexusGenRootTypes['Manufacturer']; // Manufacturer!
     createOneProduct: NexusGenRootTypes['Product']; // Product!
-    createOneShipment: NexusGenRootTypes['Shipment'] | null; // Shipment
     createOneShop: NexusGenRootTypes['Shop']; // Shop!
+    createOneTransaction: NexusGenRootTypes['Transaction']; // Transaction!
+    requestProductFromStock: string | null; // String
+    shipGoodsToStock: string | null; // String
     signIn: NexusGenRootTypes['AuthPayload'] | null; // AuthPayload
     signUp: NexusGenRootTypes['AuthPayload'] | null; // AuthPayload
     updateOneManufacturer: NexusGenRootTypes['Manufacturer'] | null; // Manufacturer
     updateOneProduct: NexusGenRootTypes['Product'] | null; // Product
-    updateOneShipment: NexusGenRootTypes['Shipment'] | null; // Shipment
+    updateOneRequest: NexusGenRootTypes['Request'] | null; // Request
     updateOneShop: NexusGenRootTypes['Shop'] | null; // Shop
+    updateOneTransaction: NexusGenRootTypes['Transaction'] | null; // Transaction
   }
   Product: { // field return type
-    count: number; // Float!
+    amount: number; // Float!
     expirationDate: NexusGenScalars['DateTime']; // DateTime!
     id: string; // String!
     manufacturer: NexusGenRootTypes['Manufacturer']; // Manufacturer!
+    manufacturerId: string; // String!
     name: string; // String!
-    recieptDate: NexusGenScalars['DateTime']; // DateTime!
-    shipments: NexusGenRootTypes['Shipment'][]; // [Shipment!]!
-    shops: NexusGenRootTypes['Shop'][]; // [Shop!]!
+    requests: NexusGenRootTypes['Request'][]; // [Request!]!
+    stockDate: NexusGenScalars['DateTime']; // DateTime!
+    transactions: NexusGenRootTypes['Transaction'][]; // [Transaction!]!
     unit: string; // String!
   }
   Query: { // field return type
-    getDailyReport: Array<NexusGenRootTypes['Shipment'] | null> | null; // [Shipment]
+    getApprovedProduct: Array<NexusGenRootTypes['Product'] | null> | null; // [Product]
+    getNotApprovedProduct: Array<NexusGenRootTypes['Product'] | null> | null; // [Product]
     manufacturer: NexusGenRootTypes['Manufacturer'] | null; // Manufacturer
     manufacturers: NexusGenRootTypes['Manufacturer'][]; // [Manufacturer!]!
     me: NexusGenRootTypes['User'] | null; // User
     product: NexusGenRootTypes['Product'] | null; // Product
     products: NexusGenRootTypes['Product'][]; // [Product!]!
-    shipment: NexusGenRootTypes['Shipment'] | null; // Shipment
-    shipments: NexusGenRootTypes['Shipment'][]; // [Shipment!]!
+    request: NexusGenRootTypes['Request'] | null; // Request
+    requests: NexusGenRootTypes['Request'][]; // [Request!]!
     shop: NexusGenRootTypes['Shop'] | null; // Shop
     shops: NexusGenRootTypes['Shop'][]; // [Shop!]!
+    transaction: NexusGenRootTypes['Transaction'] | null; // Transaction
+    transactions: NexusGenRootTypes['Transaction'][]; // [Transaction!]!
     user: NexusGenRootTypes['User'] | null; // User
     users: NexusGenRootTypes['User'][]; // [User!]!
   }
-  Shipment: { // field return type
-    count: number; // Float!
-    createdAt: NexusGenScalars['DateTime']; // DateTime!
+  Request: { // field return type
+    amount: number; // Float!
     id: string; // String!
     product: NexusGenRootTypes['Product']; // Product!
     shop: NexusGenRootTypes['Shop']; // Shop!
@@ -957,9 +1262,16 @@ export interface NexusGenFieldTypes {
   Shop: { // field return type
     id: string; // String!
     name: string; // String!
-    owner: NexusGenRootTypes['User']; // User!
-    products: NexusGenRootTypes['Product'][]; // [Product!]!
-    shipments: NexusGenRootTypes['Shipment'][]; // [Shipment!]!
+    requests: NexusGenRootTypes['Request'][]; // [Request!]!
+    shopOwner: NexusGenRootTypes['User']; // User!
+    transactions: NexusGenRootTypes['Transaction'][]; // [Transaction!]!
+  }
+  Transaction: { // field return type
+    amount: number; // Float!
+    id: string; // String!
+    manufacturer: NexusGenRootTypes['Manufacturer'] | null; // Manufacturer
+    product: NexusGenRootTypes['Product']; // Product!
+    shop: NexusGenRootTypes['Shop'] | null; // Shop
   }
   User: { // field return type
     email: string; // String!
@@ -967,7 +1279,7 @@ export interface NexusGenFieldTypes {
     id: string; // String!
     lastname: string; // String!
     manufactures: NexusGenRootTypes['Manufacturer'][]; // [Manufacturer!]!
-    role: NexusGenEnums['Role'] | null; // Role
+    role: NexusGenEnums['USER_ROLE']; // USER_ROLE!
     shops: NexusGenRootTypes['Shop'][]; // [Shop!]!
   }
 }
@@ -981,48 +1293,56 @@ export interface NexusGenFieldTypeNames {
     id: 'String'
     name: 'String'
     owner: 'User'
-    products: 'Product'
+    transactions: 'Transaction'
   }
   Mutation: { // field return type name
+    approveRequest: 'String'
+    approveShipment: 'String'
     createOneManufacturer: 'Manufacturer'
     createOneProduct: 'Product'
-    createOneShipment: 'Shipment'
     createOneShop: 'Shop'
+    createOneTransaction: 'Transaction'
+    requestProductFromStock: 'String'
+    shipGoodsToStock: 'String'
     signIn: 'AuthPayload'
     signUp: 'AuthPayload'
     updateOneManufacturer: 'Manufacturer'
     updateOneProduct: 'Product'
-    updateOneShipment: 'Shipment'
+    updateOneRequest: 'Request'
     updateOneShop: 'Shop'
+    updateOneTransaction: 'Transaction'
   }
   Product: { // field return type name
-    count: 'Float'
+    amount: 'Float'
     expirationDate: 'DateTime'
     id: 'String'
     manufacturer: 'Manufacturer'
+    manufacturerId: 'String'
     name: 'String'
-    recieptDate: 'DateTime'
-    shipments: 'Shipment'
-    shops: 'Shop'
+    requests: 'Request'
+    stockDate: 'DateTime'
+    transactions: 'Transaction'
     unit: 'String'
   }
   Query: { // field return type name
-    getDailyReport: 'Shipment'
+    getApprovedProduct: 'Product'
+    getNotApprovedProduct: 'Product'
     manufacturer: 'Manufacturer'
     manufacturers: 'Manufacturer'
     me: 'User'
     product: 'Product'
     products: 'Product'
-    shipment: 'Shipment'
-    shipments: 'Shipment'
+    request: 'Request'
+    requests: 'Request'
     shop: 'Shop'
     shops: 'Shop'
+    transaction: 'Transaction'
+    transactions: 'Transaction'
     user: 'User'
     users: 'User'
   }
-  Shipment: { // field return type name
-    count: 'Float'
-    createdAt: 'DateTime'
+  Request: { // field return type name
+    amount: 'Float'
     id: 'String'
     product: 'Product'
     shop: 'Shop'
@@ -1030,9 +1350,16 @@ export interface NexusGenFieldTypeNames {
   Shop: { // field return type name
     id: 'String'
     name: 'String'
-    owner: 'User'
-    products: 'Product'
-    shipments: 'Shipment'
+    requests: 'Request'
+    shopOwner: 'User'
+    transactions: 'Transaction'
+  }
+  Transaction: { // field return type name
+    amount: 'Float'
+    id: 'String'
+    manufacturer: 'Manufacturer'
+    product: 'Product'
+    shop: 'Shop'
   }
   User: { // field return type name
     email: 'String'
@@ -1040,32 +1367,44 @@ export interface NexusGenFieldTypeNames {
     id: 'String'
     lastname: 'String'
     manufactures: 'Manufacturer'
-    role: 'Role'
+    role: 'USER_ROLE'
     shops: 'Shop'
   }
 }
 
 export interface NexusGenArgTypes {
   Manufacturer: {
-    products: { // args
-      after?: NexusGenInputs['ProductWhereUniqueInput'] | null; // ProductWhereUniqueInput
-      before?: NexusGenInputs['ProductWhereUniqueInput'] | null; // ProductWhereUniqueInput
+    transactions: { // args
+      after?: NexusGenInputs['TransactionWhereUniqueInput'] | null; // TransactionWhereUniqueInput
+      before?: NexusGenInputs['TransactionWhereUniqueInput'] | null; // TransactionWhereUniqueInput
       first?: number | null; // Int
       last?: number | null; // Int
     }
   }
   Mutation: {
+    approveRequest: { // args
+      data: NexusGenInputs['ApproveRequestArgs']; // ApproveRequestArgs!
+    }
+    approveShipment: { // args
+      data: NexusGenInputs['ApproveShipmentArgs']; // ApproveShipmentArgs!
+    }
     createOneManufacturer: { // args
       data: NexusGenInputs['ManufacturerCreateInput']; // ManufacturerCreateInput!
     }
     createOneProduct: { // args
       data: NexusGenInputs['ProductCreateInput']; // ProductCreateInput!
     }
-    createOneShipment: { // args
-      data: NexusGenInputs['CreateShipmentArgs']; // CreateShipmentArgs!
-    }
     createOneShop: { // args
       data: NexusGenInputs['ShopCreateInput']; // ShopCreateInput!
+    }
+    createOneTransaction: { // args
+      data: NexusGenInputs['TransactionCreateInput']; // TransactionCreateInput!
+    }
+    requestProductFromStock: { // args
+      data: NexusGenInputs['RequestProductArgs']; // RequestProductArgs!
+    }
+    shipGoodsToStock: { // args
+      data: NexusGenInputs['ShipGoodsToStockArgs']; // ShipGoodsToStockArgs!
     }
     signIn: { // args
       data: NexusGenInputs['SignInInput']; // SignInInput!
@@ -1081,25 +1420,29 @@ export interface NexusGenArgTypes {
       data: NexusGenInputs['ProductUpdateInput']; // ProductUpdateInput!
       where: NexusGenInputs['ProductWhereUniqueInput']; // ProductWhereUniqueInput!
     }
-    updateOneShipment: { // args
-      data: NexusGenInputs['ShipmentUpdateInput']; // ShipmentUpdateInput!
-      where: NexusGenInputs['ShipmentWhereUniqueInput']; // ShipmentWhereUniqueInput!
+    updateOneRequest: { // args
+      data: NexusGenInputs['RequestUpdateInput']; // RequestUpdateInput!
+      where: NexusGenInputs['RequestWhereUniqueInput']; // RequestWhereUniqueInput!
     }
     updateOneShop: { // args
       data: NexusGenInputs['ShopUpdateInput']; // ShopUpdateInput!
       where: NexusGenInputs['ShopWhereUniqueInput']; // ShopWhereUniqueInput!
     }
+    updateOneTransaction: { // args
+      data: NexusGenInputs['TransactionUpdateInput']; // TransactionUpdateInput!
+      where: NexusGenInputs['TransactionWhereUniqueInput']; // TransactionWhereUniqueInput!
+    }
   }
   Product: {
-    shipments: { // args
-      after?: NexusGenInputs['ShipmentWhereUniqueInput'] | null; // ShipmentWhereUniqueInput
-      before?: NexusGenInputs['ShipmentWhereUniqueInput'] | null; // ShipmentWhereUniqueInput
+    requests: { // args
+      after?: NexusGenInputs['RequestWhereUniqueInput'] | null; // RequestWhereUniqueInput
+      before?: NexusGenInputs['RequestWhereUniqueInput'] | null; // RequestWhereUniqueInput
       first?: number | null; // Int
       last?: number | null; // Int
     }
-    shops: { // args
-      after?: NexusGenInputs['ShopWhereUniqueInput'] | null; // ShopWhereUniqueInput
-      before?: NexusGenInputs['ShopWhereUniqueInput'] | null; // ShopWhereUniqueInput
+    transactions: { // args
+      after?: NexusGenInputs['TransactionWhereUniqueInput'] | null; // TransactionWhereUniqueInput
+      before?: NexusGenInputs['TransactionWhereUniqueInput'] | null; // TransactionWhereUniqueInput
       first?: number | null; // Int
       last?: number | null; // Int
     }
@@ -1123,12 +1466,12 @@ export interface NexusGenArgTypes {
       first?: number | null; // Int
       last?: number | null; // Int
     }
-    shipment: { // args
-      where: NexusGenInputs['ShipmentWhereUniqueInput']; // ShipmentWhereUniqueInput!
+    request: { // args
+      where: NexusGenInputs['RequestWhereUniqueInput']; // RequestWhereUniqueInput!
     }
-    shipments: { // args
-      after?: NexusGenInputs['ShipmentWhereUniqueInput'] | null; // ShipmentWhereUniqueInput
-      before?: NexusGenInputs['ShipmentWhereUniqueInput'] | null; // ShipmentWhereUniqueInput
+    requests: { // args
+      after?: NexusGenInputs['RequestWhereUniqueInput'] | null; // RequestWhereUniqueInput
+      before?: NexusGenInputs['RequestWhereUniqueInput'] | null; // RequestWhereUniqueInput
       first?: number | null; // Int
       last?: number | null; // Int
     }
@@ -1138,6 +1481,15 @@ export interface NexusGenArgTypes {
     shops: { // args
       after?: NexusGenInputs['ShopWhereUniqueInput'] | null; // ShopWhereUniqueInput
       before?: NexusGenInputs['ShopWhereUniqueInput'] | null; // ShopWhereUniqueInput
+      first?: number | null; // Int
+      last?: number | null; // Int
+    }
+    transaction: { // args
+      where: NexusGenInputs['TransactionWhereUniqueInput']; // TransactionWhereUniqueInput!
+    }
+    transactions: { // args
+      after?: NexusGenInputs['TransactionWhereUniqueInput'] | null; // TransactionWhereUniqueInput
+      before?: NexusGenInputs['TransactionWhereUniqueInput'] | null; // TransactionWhereUniqueInput
       first?: number | null; // Int
       last?: number | null; // Int
     }
@@ -1152,15 +1504,15 @@ export interface NexusGenArgTypes {
     }
   }
   Shop: {
-    products: { // args
-      after?: NexusGenInputs['ProductWhereUniqueInput'] | null; // ProductWhereUniqueInput
-      before?: NexusGenInputs['ProductWhereUniqueInput'] | null; // ProductWhereUniqueInput
+    requests: { // args
+      after?: NexusGenInputs['RequestWhereUniqueInput'] | null; // RequestWhereUniqueInput
+      before?: NexusGenInputs['RequestWhereUniqueInput'] | null; // RequestWhereUniqueInput
       first?: number | null; // Int
       last?: number | null; // Int
     }
-    shipments: { // args
-      after?: NexusGenInputs['ShipmentWhereUniqueInput'] | null; // ShipmentWhereUniqueInput
-      before?: NexusGenInputs['ShipmentWhereUniqueInput'] | null; // ShipmentWhereUniqueInput
+    transactions: { // args
+      after?: NexusGenInputs['TransactionWhereUniqueInput'] | null; // TransactionWhereUniqueInput
+      before?: NexusGenInputs['TransactionWhereUniqueInput'] | null; // TransactionWhereUniqueInput
       first?: number | null; // Int
       last?: number | null; // Int
     }
