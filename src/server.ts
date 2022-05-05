@@ -16,7 +16,8 @@ const whitelist = [
   'http://localhost:3000',
   'http://www.elithys.space',
   'https://www.elithys.space',
-  'otherWhiteListURLs',
+  'https://elithys.space',
+  'http://elithys.space'
 ];
 
 app.use(cors({
