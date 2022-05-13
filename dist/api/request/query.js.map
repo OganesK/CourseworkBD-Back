@@ -1,0 +1,1 @@
+{"version":3,"file":"query.js","sourceRoot":"","sources":["../../../src/api/request/query.ts"],"names":[],"mappings":";;;AAAA,iCAAmC;AAEtB,QAAA,YAAY,GAAG,IAAA,kBAAU,EAAC;IACrC,IAAI,EAAE,OAAO;IACb,UAAU,CAAE,CAAC;QACX,CAAC,CAAC,IAAI,CAAC,OAAO,EAAE,CAAC;QACjB,CAAC,CAAC,IAAI,CAAC,QAAQ,EAAE,CAAC;IACpB,CAAC;CACF,CAAC,CAAA"}

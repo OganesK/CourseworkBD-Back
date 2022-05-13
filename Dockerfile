@@ -1,12 +1,23 @@
-# Dummy Dockerfile. Replace it with yours
-FROM node:15.11.0-buster
+FROM node:12-alpine
+RUN apk add openssl
+RUN apk add --no-cache python3 g++ make
 
-COPY . /opt/app
+WORKDIR /app
 
-WORKDIR /opt/app
+COPY package.json yarn.lock ./
 
-RUN npm install --legacy-peer-deps && npm run build
+RUN apk --no-cache --virtual build-dependencies add \
+        python3 \
+        make \
+        g++
+RUN yarn install --production
 
-EXPOSE 3000
 
-CMD [ "npm", "run", "start"]
+RUN npx prisma init
+RUN npx prisma generate
+
+COPY . .
+
+EXPOSE 4000
+
+CMD node dist/server.js
