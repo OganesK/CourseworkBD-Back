@@ -17,7 +17,9 @@ const whitelist = [
   'http://www.elithys.space',
   'https://www.elithys.space',
   'https://elithys.space',
-  'http://elithys.space'
+  'http://elithys.space',
+  'https://coursework-backend-dev.herokuapp.com',
+  'http://coursework-backend-dev.herokuapp.com'
 ];
 
 app.use(cors({
