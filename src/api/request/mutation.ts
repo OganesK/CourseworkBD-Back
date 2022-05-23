@@ -1,5 +1,6 @@
 import { extendType, nonNull, list, inputObjectType, arg } from 'nexus';
 import { Context } from '../../graphql/context';
+import { logger } from '../../logger';
 
 export const RequestMutation = extendType({
   type: 'Mutation',
@@ -53,6 +54,7 @@ export const RequestMutation = extendType({
       args: { data: nonNull(arg({ type: approveRequestArgs })) },
       resolve: async (parent, args, ctx: Context) => {
         try {
+          console.log(args.data)
           const existingRequest = await ctx.prisma.request.findFirst({
             where: {
               id: args.data.requestId
@@ -62,6 +64,7 @@ export const RequestMutation = extendType({
             }
           })
 
+          console.log(existingRequest)
 
           if (existingRequest.product.amount < existingRequest.amount) {
             throw new Error('There is no provided amout of product on warehouse.')
@@ -75,6 +78,7 @@ export const RequestMutation = extendType({
               approved: true
             }
           })
+
 
           await ctx.prisma.transaction.create({
             data: {

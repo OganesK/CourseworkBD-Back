@@ -1239,6 +1239,7 @@ export interface NexusGenFieldTypes {
   Query: { // field return type
     getApprovedProduct: Array<NexusGenRootTypes['Product'] | null> | null; // [Product]
     getNotApprovedProduct: Array<NexusGenRootTypes['Product'] | null> | null; // [Product]
+    getNotApprovedRequests: Array<NexusGenRootTypes['Request'] | null> | null; // [Request]
     manufacturer: NexusGenRootTypes['Manufacturer'] | null; // Manufacturer
     manufacturers: NexusGenRootTypes['Manufacturer'][]; // [Manufacturer!]!
     me: NexusGenRootTypes['User'] | null; // User
@@ -1327,6 +1328,7 @@ export interface NexusGenFieldTypeNames {
   Query: { // field return type name
     getApprovedProduct: 'Product'
     getNotApprovedProduct: 'Product'
+    getNotApprovedRequests: 'Request'
     manufacturer: 'Manufacturer'
     manufacturers: 'Manufacturer'
     me: 'User'

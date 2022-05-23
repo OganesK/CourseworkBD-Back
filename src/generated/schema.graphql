@@ -585,6 +585,7 @@ input ProductWhereUniqueInput {
 type Query {
   getApprovedProduct: [Product]
   getNotApprovedProduct: [Product]
+  getNotApprovedRequests: [Request]
   manufacturer(where: ManufacturerWhereUniqueInput!): Manufacturer
   manufacturers(after: ManufacturerWhereUniqueInput, before: ManufacturerWhereUniqueInput, first: Int, last: Int): [Manufacturer!]!
   me: User
